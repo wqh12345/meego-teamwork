@@ -1,0 +1,50 @@
+{
+  "name": "lark-meego-teamwork",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.6.1",
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/modifiers": "^9.0.0",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@lark-project/cli": "^2.0.6",
+    "@lark-project/js-sdk": "^2.0.1-alpha.7",
+    "antd": "^5.24.3",
+    "antd-mobile": "^5.37.1",
+    "axios": "^1.7.2",
+    "decimal.js": "^10.5.0",
+    "dhtmlx-gantt": "^8.0.9",
+    "lodash": "^4.17.21",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-fast-marquee": "^1.6.5",
+    "react-infinite-scroller": "^1.2.6",
+    "react-router-dom": "^6.25.1",
+    "react-virtualized": "^9.22.6",
+    "vconsole": "^3.15.1"
+  },
+  "devDependencies": {
+    "@lark-project/ui-kit-plugin": "^0.3.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.4.23",
+    "baseline-browser-mapping": "^2.10.13",
+    "postcss": "^8.5.6",
+    "postcss-px-to-viewport": "^1.1.1",
+    "postcss-pxtorem": "^6.1.0",
+    "tailwindcss": "^3.4.0"
+  },
+  "license": "UNLICENSED",
+  "private": true
+}

@@ -1,0 +1,130 @@
+/* TabBar.css */
+.tab-bar-container {
+  /* 确保 TabBar 固定在底部且不遮挡内容 */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: white;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
+  height: 50px;
+  /* 适配 iOS 安全区域 */
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* 主要内容的容器，需要添加底部内边距 */
+.main-content {
+  padding-bottom: 70px; /* TabBar 高度 + 安全区域 */
+  /* min-height: 100vh; */
+}
+
+/* 针对 antd-mobile TabBar 的样式覆盖 */
+.adm-tab-bar {
+  height: 50px !important;
+  border-top: 1px solid #f0f0f0 !important;
+}
+
+.adm-tab-bar-item {
+  font-size: 12px !important;
+  padding: 4px 0 !important;
+}
+
+.adm-tab-bar-item-icon {
+  margin-bottom: 4px !important;
+}
+
+/* 图标样式 */
+.tab-bar-icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  margin: 0 auto 4px;
+}
+
+/* 激活状态样式 */
+.adm-tab-bar-item-active {
+  color: #1677ff !important;
+}
+
+/* 安全区域适配 */
+.safe-area-bottom {
+  height: constant(safe-area-inset-bottom);
+  height: env(safe-area-inset-bottom);
+  background: transparent;
+}
+
+/* 暗黑模式适配（如果需要） */
+@media (prefers-color-scheme: dark) {
+  .tab-bar-container {
+    background: #141414;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  .adm-tab-bar {
+    border-top: 1px solid #303030 !important;
+  }
+}
+/* TabBar.css */
+
+/* 原有的样式保留，添加以下自定义样式 */
+
+.tab-bar-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: white;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
+  height: 60px;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.custom-tab-bar {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.tab-bar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 100%;
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+.tab-bar-icon {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 4px;
+  transition: all 0.2s ease;
+}
+
+.tab-bar-item.active .tab-bar-icon {
+  transform: scale(1.1);
+}
+
+.tab-bar-title {
+  font-size: 11px;
+  color: #999;
+  transition: all 0.2s ease;
+}
+
+.tab-bar-item.active .tab-bar-title {
+  color: #1677ff;
+  font-weight: 500;
+}
+
+.safe-area-bottom {
+  height: constant(safe-area-inset-bottom);
+  height: env(safe-area-inset-bottom);
+  background: transparent;
+}

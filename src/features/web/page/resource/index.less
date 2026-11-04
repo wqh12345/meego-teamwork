@@ -1,0 +1,77 @@
+.resource-warp {
+  .resource-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    .top-left {
+      display: flex;
+      align-items: center;
+      .top-left-item {
+        .color-icon {
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+  .resource-content {
+    margin-top: 24px;
+    height: calc(100vh - 160px);
+    position: relative;
+    .resource-content-top {
+      position: absolute;
+      width: 417px;
+      height: 67px;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .resource-content-picker {
+        width: 240px;
+        z-index: 99;
+        padding: 0 10px;
+        box-sizing: border-box;
+      }
+      .resource-content-set {
+        width: 20px;
+        height: 16px;
+        display: flex;
+        z-index: 99;
+        justify-content: center;
+        align-items: center;
+        .set-icon {
+          padding-right: 5px;
+          // color: rgba(0, 0, 0, 0.54);
+          color: #bbb;
+        }
+      }
+    }
+  }
+}
+.select-item {
+  display: flex;
+  align-items: center;
+  .select-item-txt {
+    margin-left: 5px;
+  }
+}
+.resource-selectUser-modal-tip {
+  margin-top: 10px;
+}
+.gantt_grid_scale {
+  padding-right: 10px;
+}
+.ant-popover {
+  .anticon {
+    color: #bbb;
+  }
+}
+.select-team-admin {
+  position: absolute;
+  bottom: 35px;
+}

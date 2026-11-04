@@ -1,0 +1,34 @@
+/* MainLayout.css */
+.main-layout {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* iOS 平滑滚动 */
+  padding-bottom: 60px; /* TabBar 高度 */
+}
+
+/* 如果需要根据是否显示 TabBar 动态调整 */
+.main-content.with-tabbar {
+  padding-bottom: 60px;
+}
+
+.main-content.without-tabbar {
+  padding-bottom: 0;
+}
+
+/* 响应式设计 */
+@media (min-width: 768px) {
+  /* 平板和桌面端可能不需要 TabBar，或需要不同样式 */
+  .tab-bar-container {
+    max-width: 768px;
+    margin: 0 auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}

@@ -1,0 +1,318 @@
+.permissions-set-warp {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 8px;
+  .approval-set-top {
+    padding: 0px 0px 16px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    color: #646A73;
+    font-size: 14px;
+    flex-direction: column;
+  }
+  .approval-set-label {
+    font-size: 16px;
+    color: #222222;
+  }
+  .guifan-f14{
+    margin-top: 5px;
+    font-weight: 400;
+    font-size: 14px;
+    color: #646A73;
+  }
+ .anticon {
+    color: #C6C6C6;
+    margin-left: 4px;
+    font-size: 13px;
+  }
+  .approval-set-switch {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .approval-set-des {
+    font-size: 14px;
+    color: #646A73;
+  }
+  .approval-title-f16{
+    font-size: 16px;
+    color: #222222;
+    padding: 15px 0 12px;
+  }
+  .approval-set-tip{
+    color: #646A73;
+    font-size: 14px;
+  }
+  .table-columns-item-title {
+    display: flex;
+    align-items: center;
+    .anticon {
+      color: #bbbbbb;
+      margin-left: 4px;
+    }
+  }
+  .approval-form {
+    margin-top: 8px;
+    .ant-form-item {
+      margin-bottom: 0;
+    }
+    .input-disabled {
+      color: #262626;
+      background-color: inherit;
+      border-color: transparent;
+      box-shadow: none;
+      cursor: default;
+      opacity: 1;
+    }
+    .select-disabled {
+      .ant-select-selector {
+        border: none;
+        background: inherit;
+        color: #262626;
+        cursor: default;
+        &::after {
+          content: "";
+        }
+        .ant-select-selection-wrap {
+          &::after {
+            content: "";
+          }
+        }
+      }
+      .ant-select-arrow {
+        display: none;
+      }
+    }
+  }
+  .approval-set-bottom {
+    justify-content: flex-start;
+    width: 100%;
+  }
+  
+  // 审批人容器样式
+  .approval-users-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 0 4px 4px 0;
+    // border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    min-height: 32px;
+  }
+  
+  // 审批人标签样式
+  .approval-user-tag {
+    display: flex;
+    align-items: center;
+    margin: 2px 4px;
+    padding: 2px 8px 2px 0;
+    border-radius: 100px;
+    font-size: 12px;
+    height: 28px;
+    background: #EFF1F1;
+    
+    .user-name {
+      margin-right: 4px;
+      color: #1F2329;
+      font-size: 14px;
+    }
+    
+    .remove-user-btn {
+      background: none;
+      border: none;
+      color: #646A73;
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 1;
+      padding: 0;
+      width: 14px;
+      height: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+  }
+  
+  // 蓝色标签样式
+  .blue-tag {
+    background-color: #e6f4ff;
+    color: #1890ff;
+    border: 1px solid #91d5ff;
+  }
+  
+  // 灰色标签样式
+  .gray-tag {
+    background-color: #f0f0f0;
+    color: #666;
+    border: 1px solid #d9d9d9;
+  }
+  
+  // 添加按钮样式
+  .add-user-btn {
+    color: #999;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 32px;
+    border-radius: 16px 16px 16px 16px;
+    border: 1px solid #E8E8E8;
+  }
+  .approval-set-error{
+    color: red;
+    font-size: 12px;
+  }
+  .add-user-btn:hover {
+    border-color: #1890ff;
+    color: #1890ff;
+  }
+}
+
+.approval-table-container {
+  width: 100%;
+  .approval-table-header {
+    margin-bottom: 8px;
+    .header-title {
+      color: #262626;
+      margin-bottom: 0;
+    }
+    .header-tip {
+      color: #ff4d4f;
+      font-size: 12px;
+    }
+  }
+  .ant-table {
+    margin-bottom: 16px;
+    .ant-table-thead > tr > th {
+      background-color: #fafafa;
+      border-bottom: 1px solid #e8e8e8;
+    }
+    .ant-table-tbody > tr > td {
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .ant-table-tbody > tr:last-child > td {
+      border-bottom: none;
+    }
+    .ant-table-body >table >tbody>tr>td{
+      vertical-align: top;
+    }
+    .ant-table-body >table >tbody>tr>td:last-child{
+      vertical-align: middle
+    }
+    .add-role-row{
+      vertical-align: top;
+      margin-right: 2px;
+      margin-top: 3px;
+    }
+  }
+  .add-row-container {
+    color: #646A73;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // margin-top: 16px;
+  }
+  .ant-table-wrapper .ant-table-footer {
+    padding: 8px;
+    color: #262626;
+    background: #FAFAFA;
+    
+}
+.ant-table-wrapper .ant-table-thead>tr>th,.ant-table-wrapper .ant-table-tbody>tr>td{
+  padding: 8px 16px;
+}
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+  }
+  .delete-disabled {
+    font-size: 14px;
+    color: #d9d9d9 !important;
+    cursor: not-allowed !important;
+  }
+   .delete-show {
+    color: #4247f6 !important;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-header >table >thead>tr>th{
+    color:#1F2329;
+    font-size: 15px !important;
+    font-weight: 500;
+  }
+  .auth-set-left-head{
+    padding: 12px 0;
+  }
+  .auth-obj-item{
+    cursor: pointer;
+    border-radius: 8px;
+    padding:8px;
+    border: 1px solid #E8E8E8;
+    position: relative;
+  }
+  .delete-text{
+    color: #4247f6;
+  }
+  .auth-obj-item .team-name-jx {
+  display: inline-block;
+  max-width: 66px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  word-break: break-all;
+   color: #646A73;
+  }
+  .user-item-area {
+    padding: 2px 8px;
+    background-color: #F4F4F4;
+    color: #646A73;
+    border-radius: 4px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+    .user-item-area-num {
+    padding: 2px 8px;
+    background-color: #F4F4F4;
+    color: #646A73;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .ant-table-container > .ant-table-header > table > thead > tr > th{
+    border-right: none !important;
+  }
+  .ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-body >table >tbody>tr>td{
+    border-right: none !important;
+  }
+  .add-row-text{
+    cursor: pointer;
+  }
+  .auth-user-head{
+  position: absolute;
+    right: 5px;
+    top: 7px;
+    width: 23px;
+  }
+}
+.ant-tooltip .teams-long-show{
+    display: inline-block;
+    max-width: 170px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    word-break: break-all;
+}

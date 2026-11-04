@@ -1,0 +1,37 @@
+{
+  "siteDomain": "https://project.feishu.cn",
+  "pluginId": "MII_6695DDDC36A18001",
+  "pluginSecret": "d737304d76d988ec34ff9968318a8012a37d76f8d6e356c03b454840d7f0a67033937454bc034f93852a2a63ea6861ab",
+  "baseUrl": "https://timeplugintest.lundong.com.cn",
+  "boardKey": "board_2_bh9a",
+  "timeisvAppId": "cli_aac4a3dcbab85bd7",
+  "timeisvServerUrl": "timeisv-web-test.lundong.com.cn",
+  "pluginVersion": "5.1.0",
+  "resources": [
+    {
+      "id": "page-web",
+      "entry": "./src/features/web/page/index.tsx"
+    },
+    {
+      "id": "control-web",
+      "entry": "./src/features/web/control/index.tsx"
+    },
+    {
+      "id": "tab-web",
+      "entry": "./src/features/web/tab/index.tsx"
+    },
+    {
+      "id": "config-web",
+      "entry": "./src/features/web/config/index.tsx"
+    },
+    {
+      "id": "page-mob",
+      "entry": "./src/features/mob/page/index.tsx"
+    },
+    {
+      "id": "control-mob",
+      "entry": "./src/features/mob/control/index.tsx"
+    }
+  ],
+  "source_type": "remote"
+}

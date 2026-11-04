@@ -1,0 +1,214 @@
+.auth-selected-user-warp {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.auth-selected-user-warp .selected-user-left {
+  flex: 1;
+  height: 448px;
+  padding-bottom: 24px;
+  overflow-y: auto;
+  border-radius: 16px 16px 16px 16px;
+  border: 1px solid #ededed;
+  box-sizing: border-box;
+}
+.auth-selected-user-warp .selected-user-left .select-input {
+  padding: 24px 24px 13px 24px;
+}
+.auth-selected-user-warp .selected-user-left .select-input .ant-input-affix-wrapper {
+  height: 36px;
+  border-radius: 18px 18px 18px 18px;
+  opacity: 1;
+  border: 1px solid #ededed;
+}
+.auth-selected-user-warp .selected-user-left .select-content {
+  height: 345px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.auth-selected-user-warp .selected-user-left .select-content .ant-breadcrumb-link a {
+  display: inline-block;
+  max-width: 152px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+.auth-selected-user-warp .selected-user-left .select-content .ant-breadcrumb {
+  padding-left: 27px;
+  padding-right: 5px;
+  line-height: 30px;
+  margin-bottom: 10px;
+}
+.auth-selected-user-warp .selected-user-left .select-content .ant-checkbox-group {
+  display: block;
+  margin-left: 27px;
+}
+.auth-selected-user-warp .selected-user-left .select-content .select-item {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding-right: 0px;
+}
+.auth-selected-user-warp .selected-user-left .select-content .select-item label {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.auth-selected-user-warp .selected-user-left .select-content .select-item .label {
+  width: 100%;
+}
+.auth-selected-user-warp
+  .selected-user-left
+  .select-content
+  .select-item
+  .label-span {
+  width: 80%;
+  display: flex;
+}
+.auth-selected-user-warp .ant-checkbox + span {
+  width: calc(100% - 30px);
+  display: flex;
+}
+.auth-selected-user-warp
+  .selected-user-left
+  .select-content
+  .select-item
+  .select-item-txt {
+  margin-left: 5px;
+  display: inline-block;
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  word-break: break-all;
+}
+.auth-selected-user-warp
+  .selected-user-left
+  .select-content
+  .select-item
+  .select-item-num {
+  margin-left: 5px;
+}
+.auth-selected-user-warp
+  .selected-user-left
+  .select-content
+  .select-item
+  .select-item-btn {
+  position: absolute;
+  right: 5px;
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 20px;
+}
+.auth-selected-user-warp
+  .selected-user-left
+  .select-content
+  .ant-tree-treenode-selected {
+  width: 100%;
+  background-color: #ececfe;
+}
+.auth-selected-user-warp .selected-user-right {
+  flex: 1;
+  height: 448px;
+  overflow-y: auto;
+  padding-bottom: 24px;
+  margin-left: 24px;
+  border-radius: 16px 16px 16px 16px;
+  border: 1px solid #ededed;
+  box-sizing: border-box;
+  color: #262626;
+}
+.auth-selected-user-warp .selected-user-right .selected-title {
+  padding: 24px 24px 16px 24px;
+  font-weight: 550;
+  user-select: none;
+  display: flex;
+  justify-content: space-between;
+}
+.auth-selected-user-warp .selected-user-right .selected-title .clear-selected {
+  color: #4247f6;
+  margin-left: 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+/* .auth-selected-user-warp .selected-user-right .selected-title .clear-selected:hover {
+  color: #4247f6;
+  text-decoration: underline;
+} */
+.auth-selected-user-warp .selected-user-right .selected-box {
+  padding: 0 24px 8px 24px;
+  display: flex;
+  justify-content: space-between;
+  user-select: none;
+}
+.auth-selected-user-warp .selected-user-right .selected-box .select-box-left {
+  color: #727272;
+}
+.auth-selected-user-warp .selected-user-right .selected-box .ant-btn {
+  padding: 0;
+  height: 14px;
+}
+.auth-selected-user-warp .selected-user-right .selected-content {
+  height: 350px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.auth-selected-user-warp .selected-user-right .selected-content .selected-item {
+  width: 100%;
+  height: 40px;
+  line-height: 1;
+  padding-left: 24px;
+  padding-right: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+.auth-selected-user-warp
+  .selected-user-right
+  .selected-content
+  .selected-item:hover {
+  background: rgba(66, 71, 246, 0.05);
+  cursor: pointer;
+}
+.auth-selected-user-warp
+  .selected-user-right
+  .selected-content
+  .selected-item
+  .selected-item-left {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+.auth-selected-user-warp
+  .selected-user-right
+  .selected-content
+  .selected-item
+  .selected-item-name {
+  margin-left: 8px;
+}
+.auth-selected-user-warp .tenant-user {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  line-height: 14px;
+  font-size: 12px;
+  text-align: center;
+  border: 2px solid #4247f6;
+  background-color: #ffffff;
+  border-radius: 50%;
+  color: #4247f6;
+}
+.auth-selected-user-warp .selected-num {
+  color: #4247f6;
+  margin: 0 2px;
+  font-weight: 500;
+  font-size: 15px;
+}

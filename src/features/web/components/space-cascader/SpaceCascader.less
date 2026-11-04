@@ -1,0 +1,79 @@
+.space-cascader {
+  width: 100%;
+}
+
+// 实例列底部的滚动加载提示项（sentinel）：水平居中展示 spinner + 文案
+.space-cascader-loading-sentinel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 4px 0;
+  color: #999;
+  font-size: 12px;
+  line-height: 1;
+  pointer-events: none; // 整体不响应点击 / hover
+  user-select: none;
+}
+
+// sentinel 所在 menu item 去掉 hover / 选中视觉反馈，避免误以为可点击
+.ant-cascader-menu-item:has(.space-cascader-loading-sentinel) {
+  cursor: default !important;
+  background: transparent !important;
+  color: #999 !important;
+  // 隐藏 cascader 默认的下钻箭头，避免出现“可下钻”假象
+  .ant-cascader-menu-item-expand-icon,
+  .ant-cascader-menu-item-loading-icon {
+    display: none !important;
+  }
+}
+
+// notFoundContent 空态：居中布局，给个最小高度，避免空面板过矮
+.space-cascader-empty {
+  color: #999;
+  font-size: 12px;
+  text-align: center;
+  padding: 24px 12px;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  img {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    opacity: 0.85;
+  }
+  span {
+    line-height: 1;
+  }
+}
+
+// 子面板内的“暂无数据”占位项（整个 menu item 仅展示缺省图）
+.space-cascader-empty-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 8px;
+  min-height: 140px;
+  gap: 8px;
+  color: #999;
+  font-size: 12px;
+  line-height: 1;
+  img {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    opacity: 0.85;
+  }
+}
+
+// 含缺省图的 menu item 去掉 hover / 选中 视觉反馈
+.ant-cascader-menu-item:has(.space-cascader-empty-item) {
+  cursor: default !important;
+  background: transparent !important;
+  padding: 0 !important;
+}

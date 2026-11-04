@@ -1,0 +1,235 @@
+.work-item-cascader {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #fff;
+  border-radius: 12px 12px 0 0;
+  position: relative;
+
+  // 确认加载遮罩
+  .confirm-loading-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    border-radius: 12px 12px 0 0;
+  }
+  
+  .cascader-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    
+    .title {
+      font-size: 17px;
+      font-weight: 500;
+      color: #1f2329;
+    }
+    
+    .cancel-btn {
+      color: #1f2329;
+      font-size: 15px;
+    }
+  }
+  
+  .cascader-tabs {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    background: #fff;
+    gap: 24px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-bottom: 1px solid #f0f0f0;
+    
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .cascader-tab {
+      position: relative;
+      font-size: 15px;
+      color: #646a73;
+      white-space: nowrap;
+      padding: 12px 0;
+      cursor: pointer;
+      flex-shrink: 0;
+      
+      &:active {
+        opacity: 0.7;
+      }
+      
+      &.active {
+        color: #3370ff;
+        
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: #3370ff;
+          border-radius: 1px;
+        }
+      }
+    }
+  }
+  
+  .cascader-list {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 20px;
+    
+    .loading-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100px;
+    }
+    
+    .empty-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100px;
+      color: #999;
+      font-size: 14px;
+    }
+    
+    .cascader-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      // border-bottom: 1px solid #f0f0f0;
+      
+      &:last-child {
+        border-bottom: none;
+      }
+      
+      &:active {
+        background: #f7f8fa;
+      }
+      
+      &.selected {
+        .item-label {
+          color: #3370ff;
+        }
+      }
+      
+      .item-left {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        min-width: 0;
+        gap: 8px;
+        
+        .item-label {
+          font-size: 15px;
+          color: #1f2329;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        
+        .check-icon {
+          font-size: 14px;
+          color: #3370ff;
+          flex-shrink: 0;
+        }
+      }
+      
+      .item-next {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        color: #3370ff;
+        flex-shrink: 0;
+        padding: 4px 0 4px 12px;
+        
+        &:active {
+          opacity: 0.7;
+        }
+        
+        .next-icon {
+          width: 16px;
+          height: 16px;
+        }
+        
+        .next-text {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+  
+  .cascader-footer {
+    padding: 12px 20px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    background: #fff;
+    
+    .confirm-btn {
+      width: 100%;
+      height: 44px;
+      background: #3370ff;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 500;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      
+      &:active {
+        background: #2860e1;
+      }
+      
+      &.disabled {
+        background: #bfbfbf;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+// 暂无数据样式
+.log-empty {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  .empty-img {
+    width: 128px;
+    height: 128px;
+  }
+  
+  .empty-text {
+    margin-top: 16px;
+    font-size: 14px;
+    color: #bbbbbb;
+  }
+}
+
+// 加载更多样式
+.loading-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0;
+  gap: 8px;
+  
+  span {
+    font-size: 14px;
+    color: #999;
+  }
+}

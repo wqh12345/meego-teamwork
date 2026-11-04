@@ -1,0 +1,533 @@
+// 工时登记页面样式
+
+.registration-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: linear-gradient(180deg, #e8e9ff 0%, #f0f1ff 30%, #F6F6F6  60%, #F6F6F6  100%);
+}
+
+// 导航栏
+.reg-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  position: relative;
+  height: 50px;
+   line-height: 50px;
+  background: #ffffff;
+  border-bottom: 1px solid #ededed;
+  // flex-shrink: 0;
+
+  .navbar-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .navbar-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #262626;
+    text-align: center;
+    // line-height: 56px;
+  }
+
+  // .navbar-actions {
+  //   display: flex;
+  //   align-items: center;
+  //   gap: 20px;
+  // }
+
+  // .navbar-icon {
+  //   font-size: 18px;
+  //   color: #262626;
+  //   cursor: pointer;
+  // }
+}
+
+// 内容区域
+.reg-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 16px;
+  -webkit-overflow-scrolling: touch;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  // 隐藏滚动条但保持滚动功能
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+}
+
+// 工时统计横幅
+.reg-stats-banner {
+  padding: 10px;
+  background: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.6);
+  border-radius: 8px;
+  border: 1px solid rgba(65,71,245,0.2);
+  // border-radius: 12px;
+  margin-bottom: 12px;
+
+  .stats-text {
+    font-size: 14px;
+    color: #262626;
+    line-height: 22px;
+
+    // 两行文案（考勤/已登记行 + 拟提交/剩余/饱和度行）
+    > div + div {
+      margin-top: 2px;
+    }
+
+    .highlight {
+      color: #4247f6;
+      font-weight: 500;
+    }
+
+    // 「同步考勤」入口（与 Web 单项登记一致）
+    .attendance-sync-btn {
+      color: #4247f6;
+      font-weight: 500;
+      margin-left: 8px;
+      padding: 2px 4px; // 扩大移动端点击热区
+
+      &.syncing {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+    }
+  }
+}
+
+// 表单卡片
+.reg-form-card {
+  background: #ffffff;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  overflow: hidden;
+
+  .form-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; // 恢复原来的布局
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f0;
+    // min-height: 56px;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &.textarea-item {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .form-label {
+      font-size: 16px;
+      font-weight: 500;
+      color: #262626;
+      flex-shrink: 0;
+
+      .required {
+        color: #ff4d4f;
+        margin-left: 2px;
+      }
+    }
+
+    .form-label-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      width: 100%;
+
+      .form-label {
+        font-size: 16px;
+        color: #262626;
+      }
+
+      .char-count {
+        font-size: 14px;
+        color: #bbbbbb;
+      }
+    }
+
+    .form-value {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      max-width: 60%; // 限制最大宽度，为 label 留出空间
+      min-width: 0; // 允许flex子元素缩小
+
+      &.clickable {
+        cursor: pointer;
+      }
+
+      .placeholder {
+        color: #bbbbbb;
+      }
+
+      .target-name-text {
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 14px;
+        color: #262626;
+        min-width: 0; // 关键：允许元素缩小到小于内容宽度
+        
+        // 编辑/详情模式下完整展示
+        &.full-display {
+          white-space: normal;
+          word-break: break-all;
+          overflow: visible;
+          text-overflow: unset;
+          text-align: right;
+          color: #262626;
+        }
+        
+        &.placeholder {
+          color: #bbbbbb;
+        }
+      }
+
+      .arrow-icon {
+        font-size: 12px;
+        color: #bbbbbb;
+      }
+
+      .member-avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: #4247f6;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .member-avatar-img {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .member-name {
+        font-size: 16px;
+        color: #262626;
+      }
+
+      .hour-input {
+        width: 80px;
+        text-align: right;
+        font-size: 16px;
+        
+        --font-size: 16px;
+        --color: #262626;
+        --placeholder-color: #bbbbbb;
+        --text-align: right;
+      }
+
+      .unit {
+        font-size: 16px;
+        color: #262626;
+        flex-shrink: 0;
+      }
+    }
+
+    .desc-textarea {
+      width: 100%;
+      font-size: 14x;
+      box-sizing: border-box;
+      
+      --font-size: 16px;
+      --color: #262626;
+      --placeholder-color: #bbbbbb;
+   
+      &.view-mode {
+        // padding: 12px;
+        // background: #f5f5f5;
+        border-radius: 8px;
+        line-height: 1.5;
+        color: #262626;
+        min-height: 80px;
+        max-height: 200px;
+        overflow-y: auto;
+        // 隐藏滚动条但保持滚动功能
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+        
+        &::-webkit-scrollbar {
+          display: none; /* Chrome, Safari and Opera */
+        }
+      }
+    }
+  }
+}
+.stats-card {
+  .form-item {
+    padding: 10px 16px;
+    // min-height: 40px;
+    border-bottom: none;
+   
+    .form-label {
+      font-weight: 500;
+      font-size: 14px;
+      color: #646A73;
+    }
+
+    .form-value {
+      font-size: 14px;
+      color: #262626;
+    }
+  }
+}
+// Cascader 选项样式
+/* 为所有选项添加右侧空间 */
+.adm-checklist-item {
+  position: relative;
+  padding-right: 32px !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 为 hasNext 为 true 的选项添加指示箭头 */
+.adm-checklist-item[data-has-next="true"]::after {
+  content: '>';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #bbbbbb;
+  font-weight: bold;
+}
+
+/* 确保选项标签不占用箭头空间 */
+.adm-cascader-view-option-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 删除提示框样式 */
+.delete-dialog {
+  border-radius: 12px;
+  padding: 20px;
+  // min-width: 320px;
+  width: 90vw;
+  // max-width: 400px;
+}
+
+.delete-dialog .adm-dialog-header {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.delete-dialog .adm-dialog-content {
+  font-size: 15px;
+  color: #666666;
+
+  text-align: center;
+  line-height: 1.5;
+}
+
+.delete-dialog .adm-dialog-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 20px;
+  
+}
+
+.delete-dialog .adm-dialog-footer-button {
+  // height: 48px;
+  border-radius: 8px;
+  font-size: 16px;
+  border: none !important;
+}
+
+.delete-dialog .adm-dialog-footer-button-primary {
+  background-color: #F0144A;
+  color: #ffffff;
+}
+
+.delete-dialog .adm-dialog-footer-button-default {
+  color: #8c8c8c;
+  background-color: transparent;
+  border: none;
+}
+
+/* 通用 Dialog 样式 - 移除所有确认弹窗的按鈕分割线 */
+.adm-dialog-footer .adm-dialog-button {
+  border-top: none !important;
+}
+
+/* 退出确认弹窗样式 - 完全自定义 */
+.exit-confirm-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+.exit-confirm-popup {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px 20px 20px;
+  text-align: center;
+  width: 100%;
+  max-width: 300px;
+
+  .exit-confirm-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #262626;
+    margin-bottom: 12px;
+  }
+
+  .exit-confirm-content {
+    font-size: 15px;
+    color: #666666;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+
+  .exit-confirm-btns {
+    display: flex;
+    gap: 12px;
+
+    .exit-btn {
+      flex: 1;
+      height: 44px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      outline: none;
+
+      &.cancel {
+        background-color: #ffffff;
+        color: #262626;
+        border: 1px solid #d9d9d9;
+      }
+
+      &.confirm {
+        background-color: #4247f6;
+        color: #ffffff;
+      }
+    }
+  }
+}
+
+// 底部按钮
+.reg-footer {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  background: #ffffff;
+  border-top: 1px solid #ededed;
+  flex-shrink: 0;
+
+  .footer-btn {
+    flex: 1;
+    height: 48px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    min-width: 0;
+    transition: all 0.2s;
+
+    // 详情页模式 - 删除按钮（红色边框）
+    &.secondary {
+      background: #ffffff;
+      color: #ff4d4f;
+      border: 1px solid #ff4d4f;
+
+      &.disabled {
+        background: #ffffff;
+        color: #bbbbbb;
+        border: 1px solid #ededed;
+        cursor: not-allowed;
+      }
+    }
+
+    // 详情页模式 - 编辑按钮（蓝色边框）
+    &.primary {
+      background: #ffffff;
+      color: #4247f6;
+      border: 1px solid #4247f6;
+
+      &.disabled {
+        background: #ffffff;
+        color: #bbbbbb;
+        border: 1px solid #ededed;
+        cursor: not-allowed;
+      }
+    }
+
+    // 编辑模式和新增模式 - 填充式按钮
+    &.primary-filled {
+      background: #4247f6;
+      color: #ffffff;
+      border: none;
+
+      &.disabled {
+        background: #f5f6f7;
+        color: #bbbbbb;
+        border: none;
+        cursor: not-allowed;
+      }
+    }
+
+    &.secondary-filled {
+      background: #f5f6f7;
+      color: #262626;
+      border: 1px solid #ededed;
+
+      &.disabled {
+        background: #f5f6f7;
+        color: #bbbbbb;
+        border: 1px solid #ededed;
+        cursor: not-allowed;
+      }
+    }
+
+    &:active:not(.disabled) {
+      opacity: 0.8;
+    }
+  }
+}

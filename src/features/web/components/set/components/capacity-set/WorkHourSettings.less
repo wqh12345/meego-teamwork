@@ -1,0 +1,294 @@
+.set-workhour-new-2 {
+  // width: 570px;
+  margin: 0;
+  padding-top: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffffff;
+  padding: 8px 20px 16px 24px;
+  .label-desc {
+    font-size: 14px;
+    color: #646A73;
+  }
+  
+  // 成员可登记范围样式
+  .registration-scope-radio {
+    display: flex;
+    flex-direction: column;
+    // gap: 16px;
+    margin-top: 12px;
+  }
+  
+  .scope-radio {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #1F2329;
+  }
+  
+  .radio-desc {
+    font-size: 14px;
+    color: #646A73;
+    margin-left: 9px;
+    margin-bottom: 13px;
+  }
+  
+  // 调整Radio组件样式
+  .ant-radio-wrapper {
+    margin-right: 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .ant-radio-wrapper-checked .ant-radio-inner {
+    border-color: #165DFF;
+    background-color: #165DFF;
+  }
+  
+  .ant-radio-wrapper-checked .ant-radio-inner:after {
+    transform: scale(0.5);
+  }
+  .ant-typography.ant-typography-secondary {
+    color: #646A73;
+  }
+  .setting-item{
+    color: #1F2329;
+  }
+  .set-form-f16 {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .head-workitem-desc{
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #646A73;
+  }
+  .common-card-item {
+    padding: 12px 0;
+    border-radius: 8px;
+
+    .setting-row {
+      display: flex;
+      justify-content: start;
+      align-items: center;
+    }
+
+    .setting-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1F2329;
+      margin-right: 10px;
+    }
+
+    .setting-desc {
+      margin-top: 8px;
+      display: block;
+      font-size: 14px;
+      color: #646A73;
+    }
+
+    .setting-input-area {
+      margin-top: 12px;
+    }
+  }
+  .setting-level{
+    font-size: 14px;
+    margin-top: 20px;
+  }
+  .ant-checkbox-wrapper{
+    margin-right: 15px;
+  }
+  .setting-desc{
+    font-size: 14px;
+    color: #646A73;
+    padding: 4px 0 6px;
+  }
+  // Tab 标准下划线风格
+  .ant-tabs-nav {
+    margin-bottom: 0 !important;
+    &::before {
+      border-bottom: 1px solid #e8e8e8 !important;
+    }
+  }
+  .ant-tabs-nav-list {
+    width: auto;
+    height: auto;
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+  }
+  .ant-tabs-ink-bar {
+    display: block !important;
+    background: #4247F6 !important;
+  }
+  .ant-tabs .ant-tabs-tab {
+    border-radius: 0;
+    flex: unset;
+    margin: 0 32px 0 0;
+    padding: 10px 0;
+    justify-content: flex-start;
+    transition: color 0.2s ease;
+    color: #646A73;
+    font-size: 16px;
+    &:hover:not(.ant-tabs-tab-active) {
+      color: #4247F6;
+      background: transparent;
+    }
+  }
+  .ant-tabs .ant-tabs-tab-active {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  .ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    font-weight: 500;
+    text-shadow: none;
+    color: #4147F5;
+  }
+  .ant-tabs-content-holder,
+  .ant-tabs-tabpane {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .ant-tabs-tabpane {
+    padding: 5px 0;
+  }
+  .ant-tabs-content{
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  // InputNumber错误状态样式 - 始终保持正常边框颜色，不显示红色边框
+  .ant-form-item-has-error .ant-input-number {
+    border-color: #d9d9d9 !important;
+    box-shadow: none !important;
+  }
+  
+  .set-workhour-new-2 .ant-form-item-has-error .ant-input-number:focus,
+  .set-workhour-new-2 .ant-form-item-has-error .ant-input-number-focused {
+    border-color: #4096ff !important;
+    box-shadow: 0 0 0 2px rgba(64, 150, 255, 0.1) !important;
+  }
+  
+  .set-workhour-new-2 .ant-form-item-has-error .ant-input-number:hover {
+    border-color: #4096ff !important;
+  }
+  
+  // 确保即使在表单验证错误时也不显示红色边框
+  .set-workhour-new-2 .ant-form-item-has-error .ant-input-number:not(.ant-input-number-disabled):not(.ant-input-number-borderless).ant-input-number {
+    border-color: #d9d9d9 !important;
+  }
+  
+  // InputNumber Group错误状态样式
+  .ant-input-number-group-wrapper-outlined.ant-input-number-group-wrapper-status-error .ant-input-number-group-addon {
+    border-color: #EDEDED !important;
+    color: #262626 !important;
+  }
+  .icon {
+      color: #bbbbbb;
+      margin: 0 4px;
+  }
+  .level-set-error {
+    color: red;
+    font-size: 12px;
+  }
+  .ant-table-wrapper .ant-table-footer {
+    padding: 8px;
+    color: #262626;
+    background: #FAFAFA;
+  }
+  .add-row-container {
+    color: #646A73;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .ant-table-container > .ant-table-header > table > thead > tr > th{
+    border-right: none !important;
+  }
+  .ant-table-container > .ant-table-header > table > thead > tr > th:last-child {
+    border-right:1px solid #f0f0f0 !important;
+  }
+  .ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-body >table >tbody>tr>td{
+    border-right: none !important;
+  }
+  .ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-body >table >tbody>tr>td:last-child {
+    border-right:1px solid #f0f0f0 !important;
+  }
+  .registration-scope {
+  width: 100%;
+  .approval-table-header {
+    margin-bottom: 8px;
+    .header-title {
+      color: #262626;
+      margin-bottom: 0;
+    }
+    .header-tip {
+      color: #ff4d4f;
+      font-size: 12px;
+    }
+  }
+  .ant-table {
+    margin-bottom: 16px;
+    .ant-table-thead > tr > th {
+      background-color: #fafafa;
+      border-bottom: 1px solid #e8e8e8;
+    }
+    .ant-table-tbody > tr > td {
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .ant-table-tbody > tr:last-child > td {
+      border-bottom: none;
+    }
+    .ant-table-body >table >tbody>tr>td{
+      vertical-align: top;
+    }
+    .ant-table-body >table >tbody>tr>td:last-child{
+      vertical-align: middle
+    }
+    .add-role-row{
+      vertical-align: top;
+      margin-right: 2px;
+      margin-top: 3px;
+    }
+  }
+  .add-row-container {
+    color: #646A73;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // margin-top: 16px;
+  }
+  .ant-table-wrapper .ant-table-footer {
+    padding: 8px;
+    color: #262626;
+    background: #FAFAFA;
+    
+}
+.ant-table-wrapper .ant-table-thead>tr>th,.ant-table-wrapper .ant-table-tbody>tr>td{
+  padding: 8px 16px;
+}
+.action-buttons{
+  cursor: pointer;
+  color: #4147F5;
+}
+}
+  .add-row-btn{
+    cursor: pointer;
+  }
+  .pd-t4{
+    padding: 4px 0;
+  }
+  .ant-select-multiple.ant-select-sm .ant-select-selection-wrap {
+    align-self: center;
+  }
+  .ant-select-multiple .ant-select-selection-item {
+    height: 28px;
+    line-height: 26px;
+    border-radius: 6px !important;
+  }
+}

@@ -1,0 +1,685 @@
+﻿diff --git a/cebian/src/App.vue b/duowei-print-bitable-table-view/src/App.vue
+index c6c18ec..794257d 100644
+--- a/cebian/src/App.vue
++++ b/duowei-print-bitable-table-view/src/App.vue
+@@ -27,14 +27,14 @@ import {
+ import {
+   getActiveSelection,
+   getCurrentRecordIds,
+-  getFirstRecordId,
+   sameContext,
+   selectRecordIds,
+-  setPickedRecord,
+   type FeishuSelection,
+ } from "./host/feishu-context.ts";
+ import { loadPrintJob } from "./host/bitable-gateway.ts";
+ import { templateRepository } from "./host/template-storage.ts";
++import { automationTemplateSync } from "./host/automation-template-sync.ts";
++import { RegistryConnectionRequiredError } from "./automation/registry-write-authorization.ts";
+ import { isDetailLinkField, type PrintJob } from "./core/print-job.ts";
+ import {
+   generateBlankTemplate,
+@@ -49,7 +49,6 @@ import {
+   type BatchPrintSession,
+ } from "./core/batch-print-session.ts";
+ import { prepareBatchCandidate } from "./core/batch-candidate-transaction.ts";
+-import { generateUuid } from "./core/uuid.ts";
+ import {
+   createBatchRetryRequest,
+   isBatchRetryRequestCurrent,
+@@ -70,7 +69,7 @@ import {
+   getBatchReadFailureFeedback,
+ } from "./components/batch-read-feedback.ts";
+ import { getBatchWorkspaceActionState } from "./components/batch-workspace-action-state.ts";
+-import { normalizeTemplateName, orderTemplatesWithFirstDefault } from "./components/template-management.ts";
++import { normalizeTemplateName } from "./components/template-management.ts";
+ import {
+   DESIGNER_COMPONENT_GROUPS,
+   type DesignerComponentType,
+@@ -133,7 +132,7 @@ const templateRenameInputRef = ref<HTMLInputElement | null>(null);
+ const templateManagementCardRef = ref<HTMLElement | null>(null);
+ const templateManagementCancelRef = ref<HTMLButtonElement | null>(null);
+ const pendingContext = ref<FeishuSelection | null>(null);
+-const pendingLoadRequest = ref<"current" | "batch" | "exit" | "records" | null>(null);
++const pendingLoadRequest = ref<"current" | "batch" | "exit" | null>(null);
+ const pendingPreviewTemplateId = ref<string | null>(null);
+ const workspaceMode = ref<WorkspaceMode>(initialWorkspaceMode());
+ const activeEditorPanel = ref<EditorPanel>("data-sources");
+@@ -154,6 +153,7 @@ const busy = ref(false);
+ const activeTemplateMenuId = ref<string | null>(null);
+ const newTemplateMenuOpen = ref(false);
+ const statusToastVisible = ref(false);
++const automationConnectUrl = ref("");
+ let contextRevision = 0;
+ let candidateRender: Promise<RenderedPrintJob> | null = null;
+ let statusToastTimer: ReturnType<typeof setTimeout> | undefined;
+@@ -168,6 +168,9 @@ let stopDesignerTemplatePanelSuppression: (() => void) | undefined;
+ let stopDesignerDirtyTracking: (() => void) | undefined;
+ let resolveDesignerReady: (() => void) | undefined;
+ let templateManagementReturnFocus: HTMLElement | null = null;
++let pendingAutomationSync: (() => Promise<void>) | null = null;
++let automationConnectionWindow: Window | null = null;
++let automationConnectionProbeTimer: ReturnType<typeof setInterval> | undefined;
+ let explicitLayeringMutation = false;
+ const readyPromise = new Promise<void>((resolve) => { resolveDesignerReady = resolve; });
+ 
+@@ -197,28 +200,6 @@ const currentTemplateName = computed(() => draftTemplateId.value
+ const visibleTemplateCount = computed(() => templateCollection.value.templates.length
+   + ((!templateCollection.value.templates.length || selectedTemplateId.value === "automatic") ? 1 : 0));
+ const templateSelected = computed(() => templateLoaded.value && Boolean(selectedTemplateId.value));
+-
+-// 灞曠ず灞傦細榛樿妯℃澘姘歌繙鎺掑湪鏈€鍓嶏紙鍏朵綑淇濇寔瀛樺偍鍘熷簭锛屼笉鏀瑰瓨鍌級銆?-const orderedTemplates = computed(() => orderTemplatesWithFirstDefault(
+-  templateCollection.value.templates,
+-  templateCollection.value.defaultId,
+-));
+-type TemplateListEntry = { type: "auto" } | { type: "saved"; item: StoredTemplate };
+-const templateListEntries = computed<TemplateListEntry[]>(() => {
+-  const saved = orderedTemplates.value;
+-  const showAuto = !templateCollection.value.templates.length || selectedTemplateId.value === "automatic";
+-  const entries: TemplateListEntry[] = [];
+-  let cursor = 0;
+-  if (saved.length && saved[0].id === templateCollection.value.defaultId) {
+-    entries.push({ type: "saved", item: saved[0] }); // 榛樿宸插瓨妯℃澘缃簬鍏ㄥ垪琛ㄦ渶涓?-    cursor = 1;
+-    if (showAuto) entries.push({ type: "auto" });
+-  } else if (showAuto) {
+-    entries.push({ type: "auto" });
+-  }
+-  for (; cursor < saved.length; cursor += 1) entries.push({ type: "saved", item: saved[cursor] });
+-  return entries;
+-});
+ const dataSourceSearch = ref("");
+ const copiedSourceId = ref("");
+ const fieldDataSources = computed(() => printJob.value?.table.fields ?? []);
+@@ -249,11 +230,6 @@ const isBatchMode = computed(() => batchWorkspaceActions.value.isBatchMode);
+ const workspaceSurface = computed(() => getWorkspaceSurface(workspaceMode.value, isBatchMode.value));
+ const presentation = computed(() => getWorkspacePresentation(workspaceSurface.value));
+ const showBatchRetry = computed(() => batchWorkspaceActions.value.retryVisible);
+-const hasSelectedRecord = computed(() => Boolean(printJob.value && printJob.value.documents.length));
+-const recordPickerLabel = computed(() => {
+-  if (isBatchMode.value) return "閲嶆柊閫夋嫨";
+-  return selection.value?.recordId ? "閲嶉€夎褰? : "閫夋嫨璁板綍";
+-});
+ const previewPaperWidth = computed(() => renderedPages.value?.canvasWidth ?? 794);
+ const previewPaperHeight = computed(() => renderedPages.value ? renderedPreviewHeight(renderedPages.value) : 1040);
+ const previewScale = computed(() => fitPreviewPaper(previewPaperWidth.value, previewAvailableWidth.value));
+@@ -268,29 +244,15 @@ const previewFrameStyle = computed(() => ({
+ }));
+ watch(previewSurfaceRef, (surface, _, onCleanup) => {
+   if (!surface) return;
+-  let frame = 0;
+   const measure = () => {
+     const style = getComputedStyle(surface);
+-    const next = Math.max(0,
++    previewAvailableWidth.value = Math.max(0,
+       surface.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight));
+-    // Ignore sub-pixel churn so writing the scaled paper size never re-triggers
+-    // the observer in a feedback loop when the sidebar width animates smaller.
+-    if (Math.abs(next - previewAvailableWidth.value) < 1) return;
+-    previewAvailableWidth.value = next;
+   };
+   measure();
+-  // Defer measurement to the next frame: the reactive style update must not run
+-  // synchronously inside the ResizeObserver callback, which is what produces
+-  // "ResizeObserver loop completed with undelivered notifications".
+-  const observer = new ResizeObserver(() => {
+-    cancelAnimationFrame(frame);
+-    frame = requestAnimationFrame(measure);
+-  });
++  const observer = new ResizeObserver(measure);
+   observer.observe(surface);
+-  onCleanup(() => {
+-    cancelAnimationFrame(frame);
+-    observer.disconnect();
+-  });
++  onCleanup(() => observer.disconnect());
+ });
+ const hasFeedbackError = computed(() => Boolean(error.value || templateWarning.value || previewError.value));
+ const showStatusFeedback = computed(() => busy.value
+@@ -340,6 +302,99 @@ function handleGlobalPointerDown(event: PointerEvent) {
+   closeTransientMenus();
+ }
+ 
++function rememberAutomationConnection(error: Error, retry: () => Promise<void>): void {
++  if (!(error instanceof RegistryConnectionRequiredError)) return;
++  automationConnectUrl.value = error.connectUrl;
++  pendingAutomationSync = retry;
++}
++
++function clearAutomationConnection(): void {
++  if (automationConnectionProbeTimer) clearInterval(automationConnectionProbeTimer);
++  automationConnectionProbeTimer = undefined;
++  automationConnectUrl.value = "";
++  pendingAutomationSync = null;
++  automationConnectionWindow = null;
++}
++
++function connectAutomation(): void {
++  if (!automationConnectUrl.value || busy.value) return;
++  const popup = window.open(
++    automationConnectUrl.value,
++    "duowei-print-oauth",
++    "popup=yes,width=520,height=680,resizable=yes,scrollbars=yes",
++  );
++  if (!popup) {
++    error.value = "娴忚鍣ㄩ樆姝簡杩炴帴绐楀彛锛岃鍏佽澶氱淮鎵撳嵃鎵撳紑绐楀彛鍚庨噸璇?;
++    status.value = "鑷姩鍖栧皻鏈繛鎺?;
++    return;
++  }
++  automationConnectionWindow = popup;
++  const bridge = automationTemplateSync?.bridge;
++  if (automationConnectionProbeTimer) clearInterval(automationConnectionProbeTimer);
++  automationConnectionProbeTimer = undefined;
++  if (bridge) {
++    const probe = () => {
++      if (popup.closed) {
++        if (automationConnectionProbeTimer) clearInterval(automationConnectionProbeTimer);
++        automationConnectionProbeTimer = undefined;
++        return;
++      }
++      bridge.probe(popup);
++    };
++    probe();
++    automationConnectionProbeTimer = setInterval(probe, 500);
++    status.value = "姝ｅ湪杩炴帴鑷姩鍖栨ā鏉挎湇鍔♀€?;
++  } else {
++    status.value = "璇峰湪鏂扮獥鍙ｅ畬鎴愰涔﹁繛鎺?;
++  }
++}
++
++async function handleAutomationConnectionMessage(event: MessageEvent): Promise<void> {
++  if (automationTemplateSync?.bridge?.handleMessage(event)) return;
++  if (!automationConnectUrl.value || !automationConnectionWindow) return;
++  if (event.source !== automationConnectionWindow) return;
++  if (event.origin !== new URL(automationConnectUrl.value).origin) return;
++  const data = event.data;
++  if (!data || typeof data !== "object" || Array.isArray(data)) return;
++  const type = (data as Record<string, unknown>).type;
++  if (type === "duowei-print:oauth-failed") {
++    if (automationConnectionProbeTimer) clearInterval(automationConnectionProbeTimer);
++    automationConnectionProbeTimer = undefined;
++    automationTemplateSync?.bridge?.disconnect();
++    error.value = typeof (data as Record<string, unknown>).message === "string"
++      ? String((data as Record<string, unknown>).message)
++      : "椋炰功杩炴帴鏈畬鎴愶紝璇烽噸璇?;
++    status.value = "鑷姩鍖栧皻鏈繛鎺?;
++    automationConnectionWindow = null;
++    return;
++  }
++  if (type !== "duowei-print:oauth-connected") return;
++  if (automationConnectionProbeTimer) clearInterval(automationConnectionProbeTimer);
++  automationConnectionProbeTimer = undefined;
++  automationTemplateSync?.bridge?.connect(automationConnectionWindow);
++  const retry = pendingAutomationSync;
++  automationConnectionWindow = null;
++  if (!retry) {
++    clearAutomationConnection();
++    return;
++  }
++  busy.value = true;
++  error.value = "";
++  status.value = "宸茶繛鎺ワ紝姝ｅ湪鍚屾褰撳墠妯℃澘鈥?;
++  try {
++    await retry();
++    clearAutomationConnection();
++    status.value = "鑷姩鍖栧凡杩炴帴锛屽綋鍓嶆ā鏉垮凡鍚屾";
++  } catch (cause) {
++    const failure = cause instanceof Error ? cause : new Error("鑷姩鍖栨ā鏉垮悓姝ュけ璐?);
++    rememberAutomationConnection(failure, retry);
++    error.value = failure.message;
++    status.value = automationConnectUrl.value ? "鑷姩鍖栬繛鎺ユ湭鐢熸晥锛岃閲嶈瘯" : "鑷姩鍖栨ā鏉垮悓姝ュけ璐?;
++  } finally {
++    busy.value = false;
++  }
++}
++
+ function handleGlobalKeydown(event: KeyboardEvent) {
+   if (event.key !== "Escape") return;
+   if (templateManagementDialog.value && !busy.value) closeTemplateManagementDialog();
+@@ -438,23 +493,13 @@ async function loadRecords(useBatchPicker = false) {
+     batchPreviewStale.value = false;
+   }
+   try {
+-    let active = await getActiveSelection();
++    const active = await getActiveSelection();
+     selection.value = active;
+-    let ids = getCurrentRecordIds(active);
++    const ids = getCurrentRecordIds(active);
+     await assertCurrentContext(active, revision);
+     if (!ids.length) {
+-      // 渚ц竟鏍忓涓绘棤銆屽綋鍓嶅睍寮€璁板綍銆嶏紝鏈樉寮忛€夋嫨鏃惰嚜鍔ㄥ彇鏁版嵁琛ㄩ鏉★紝鍏嶅幓姣忔閫夎褰?-      const first = await getFirstRecordId(active.tableId);
+-      if (first) {
+-        setPickedRecord({ tableId: active.tableId, viewId: active.viewId, recordId: first });
+-        active = { ...active, recordId: first };
+-        ids = [first];
+-        selection.value = active;
+-        await assertCurrentContext(active, revision);
+-      } else {
+-        status.value = "灏氭湭閫夋嫨鎵撳嵃璁板綍锛岃鐐瑰嚮銆岄€夋嫨璁板綍銆?;
+-        return;
+-      }
++      status.value = "褰撳墠涓嶆槸鏈夋晥鐨勮褰曡鍥撅紝璇蜂粠澶氱淮琛ㄦ牸璁板綍璇︽儏鎵撳紑澶氱淮鎵撳嵃";
++      return;
+     }
+     const job = await loadPrintJob(active, ids);
+     await assertCurrentContext(active, revision);
+@@ -477,7 +522,7 @@ async function loadRecords(useBatchPicker = false) {
+   }
+ }
+ 
+-async function loadBatchCandidate(retryRequest?: BatchRetryRequest, preselectedIds?: string[]) {
++async function loadBatchCandidate(retryRequest?: BatchRetryRequest) {
+   const revision = ++contextRevision;
+   const previous = printJob.value;
+   const designer = designerRef.value;
+@@ -503,9 +548,7 @@ async function loadBatchCandidate(retryRequest?: BatchRetryRequest, preselectedI
+     }
+     const ids = retryRequest
+       ? [...retryRequest.recordIds]
+-      : preselectedIds?.length
+-        ? [...preselectedIds]
+-        : await selectRecordIds(active);
++      : await selectRecordIds(active);
+     if (!retryRequest) await assertCurrentContext(active, revision);
+     if (!ids.length) {
+       status.value = "鏈洿鏀规墦鍗拌褰?;
+@@ -543,7 +586,7 @@ async function loadBatchCandidate(retryRequest?: BatchRetryRequest, preselectedI
+     });
+     const context = { baseId: active.baseId, tableId: active.tableId };
+     const existingId = storedTemplate.value?.id;
+-    const id = existingId ?? draftTemplateId.value ?? generateUuid();
++    const id = existingId ?? draftTemplateId.value ?? crypto.randomUUID();
+     savingSelection = true;
+     const updated = existingId
+       ? await templateRepository.setBatchRecords(context, id, candidate.session.committedRecordIds,
+@@ -618,7 +661,7 @@ async function exitBatchMode() {
+     if (!designer || !previous) return;
+     const active = await getActiveSelection();
+     const ids = getCurrentRecordIds(active);
+-    if (!ids.length) throw new Error("灏氭湭閫夋嫨鎵撳嵃璁板綍锛岃鐐瑰嚮銆岄€夋嫨璁板綍銆嶏紱鍘熸壒娆″凡淇濈暀");
++    if (!ids.length) throw new Error("褰撳墠瀹夸富璁板綍涓嶅彲鐢紱鍘熸壒娆″凡淇濈暀");
+     const job = await loadPrintJob(active, ids);
+     await assertCurrentContext(active, revision);
+     const canonical = storedTemplate.value?.template ?? previousDesignerTemplate;
+@@ -952,7 +995,7 @@ async function saveTemplate(options: { returnToPreview?: boolean; allowContextCh
+     if (!options.allowContextChange) await assertCurrentContext(active, revision);
+     if (batchEditing) await flushBatchProjectionSync();
+     const id = draftTemplateId.value ?? (selectedTemplateId.value === "automatic"
+-      ? generateUuid() : selectedTemplateId.value);
++      ? crypto.randomUUID() : selectedTemplateId.value);
+     if (!id) throw new Error("璇峰厛閫夋嫨妯℃澘");
+     const editedTemplate = restoreImplicitSelectionLayering(
+       getPersistentTemplateData(designerRef.value),
+@@ -992,6 +1035,25 @@ async function saveTemplate(options: { returnToPreview?: boolean; allowContextCh
+       updated = await persist();
+     }
+     const saved = updated.templates.find((item) => item.id === id)!;
++    let automationSyncFailure: Error | null = null;
++    if (automationTemplateSync) {
++      const templateSync = automationTemplateSync;
++      try {
++        await templateSync.sync({
++          baseToken: active.baseId,
++          tableId: active.tableId,
++        }, saved);
++        clearAutomationConnection();
++      } catch (cause) {
++        automationSyncFailure = cause instanceof Error
++          ? cause
++          : new Error("妯℃澘宸蹭繚瀛橈紝浣嗚嚜鍔ㄥ寲鍚屾澶辫触");
++        rememberAutomationConnection(automationSyncFailure, () => templateSync.sync({
++          baseToken: active.baseId,
++          tableId: active.tableId,
++        }, saved).then(() => undefined));
++      }
++    }
+     templateCollection.value = updated;
+     selectedTemplateId.value = id;
+     draftTemplateId.value = null;
+@@ -1007,8 +1069,11 @@ async function saveTemplate(options: { returnToPreview?: boolean; allowContextCh
+     status.value = "妯℃澘宸蹭繚瀛橈紙鏈啓鍏ュ綋鍓嶈褰曞€硷級";
+     if (batchEditing && renderFailure) {
+       batchPreviewStale.value = true;
+-      error.value = `妯℃澘宸蹭繚瀛橈紝浣嗘壒閲忛瑙堝埛鏂板け璐ワ細${renderFailure.message}`;
+-      status.value = "妯℃澘宸蹭繚瀛橈紝鍘熸壒閲忛瑙堜粛淇濈暀锛涜閲嶈瘯鍒锋柊";
++      error.value = `妯℃澘宸蹭繚瀛橈紝浣嗘壒閲忛瑙堝埛鏂板け璐ワ細${renderFailure.message}`
++        + (automationSyncFailure ? `锛?{automationSyncFailure.message}` : "");
++      status.value = automationSyncFailure
++        ? "妯℃澘宸蹭繚瀛橈紝浣嗘壒閲忛瑙堝埛鏂板拰鑷姩鍖栧悓姝ュけ璐?
++        : "妯℃澘宸蹭繚瀛橈紝鍘熸壒閲忛瑙堜粛淇濈暀锛涜閲嶈瘯鍒锋柊";
+       return false;
+     }
+     if (renderedBatch) {
+@@ -1021,6 +1086,14 @@ async function saveTemplate(options: { returnToPreview?: boolean; allowContextCh
+     } else if (options.returnToPreview) {
+       workspaceMode.value = "preview";
+     }
++    if (automationSyncFailure) {
++      error.value = automationSyncFailure.message;
++      status.value = "妯℃澘宸蹭繚瀛橈紝浣嗚嚜鍔ㄥ寲鍚屾澶辫触";
++    } else if (automationTemplateSync) {
++      status.value = renderedBatch
++        ? `妯℃澘宸蹭繚瀛樺苟鎸?${batchSession.value.committedRecordIds.length} 鏉¤褰曞埛鏂帮紝鍙敤浜庤嚜鍔ㄥ寲`
++        : "妯℃澘宸蹭繚瀛橈紝鍙敤浜庤嚜鍔ㄥ寲";
++    }
+     return true;
+   } catch (cause) {
+     if (revision === contextRevision) {
+@@ -1049,7 +1122,7 @@ async function createTemplate(
+   let job = previousJob;
+   const active = selection.value;
+   const revision = contextRevision;
+-  const draftId = generateUuid();
++  const draftId = crypto.randomUUID();
+   const exitsOwnedBatch = shouldExitBatchOnTemplateSwitch(batchSession.value, draftId);
+   lastTemplateCreateKind.value = kind;
+   busy.value = true;
+@@ -1341,8 +1414,51 @@ async function updateDirectory(
+         ? await templateRepository.remove(context, item.id, expected)
+         : await templateRepository.setDefault(context, item.id, expected);
+     await assertCurrentContext(active, revision);
++    let automationSyncFailure: Error | null = null;
++    if (automationTemplateSync && action !== "default") {
++      const templateSync = automationTemplateSync;
++      try {
++        if (action === "remove") {
++          await templateSync.remove({
++            baseToken: active.baseId,
++            tableId: active.tableId,
++          }, item);
++        } else {
++          const renamed = updated.templates.find((template) => template.id === item.id);
++          if (!renamed) throw new Error("閲嶅懡鍚嶅悗鐨勬ā鏉夸笉瀛樺湪");
++          await templateSync.sync({
++            baseToken: active.baseId,
++            tableId: active.tableId,
++          }, renamed);
++        }
++        clearAutomationConnection();
++      } catch (cause) {
++        automationSyncFailure = cause instanceof Error
++          ? cause
++          : new Error("妯℃澘鐩綍宸叉洿鏂帮紝浣嗚嚜鍔ㄥ寲鍚屾澶辫触");
++        const retry = action === "remove"
++          ? () => templateSync.remove({
++              baseToken: active.baseId,
++              tableId: active.tableId,
++            }, item).then(() => undefined)
++          : () => {
++              const renamed = updated.templates.find((template) => template.id === item.id);
++              if (!renamed) return Promise.reject(new Error("閲嶅懡鍚嶅悗鐨勬ā鏉夸笉瀛樺湪"));
++              return templateSync.sync({
++                baseToken: active.baseId,
++                tableId: active.tableId,
++              }, renamed).then(() => undefined);
++            };
++        rememberAutomationConnection(automationSyncFailure, retry);
++      }
++    }
+     templateCollection.value = updated;
+-    status.value = action === "rename" ? "妯℃澘宸查噸鍛藉悕" : action === "remove" ? "妯℃澘宸插垹闄? : "榛樿妯℃澘宸叉洿鏂?;
++    if (automationSyncFailure) {
++      error.value = automationSyncFailure.message.replace(/^妯℃澘宸蹭繚瀛?, "妯℃澘鐩綍宸叉洿鏂?);
++      status.value = "妯℃澘鐩綍宸叉洿鏂帮紝浣嗚嚜鍔ㄥ寲鍚屾澶辫触";
++    } else {
++      status.value = action === "rename" ? "妯℃澘宸查噸鍛藉悕" : action === "remove" ? "妯℃澘宸插垹闄? : "榛樿妯℃澘宸叉洿鏂?;
++    }
+     if (action === "remove" && selectedTemplateId.value === item.id) {
+       nextSelection = updated.defaultId ?? "automatic";
+     }
+@@ -1615,69 +1731,14 @@ function requestTemplateReload() {
+     selectedTemplateId.value === "automatic" ? null : selectedTemplateId.value);
+ }
+ 
+-/**
+- * 缁熶竴璁板綍閫夋嫨鍏ュ彛锛氬畼鏂归€夋嫨鍣ㄩ€?1 鏉¤蛋鍗曟潯娴佺▼锛岄€夊鏉¤繘鍏ユ壒閲忔祦绋嬨€?- * 瀛樺湪鏈繚瀛樻ā鏉胯崏绋挎椂鍏堝脊鍐崇瓥妗嗗鐞嗭紝閬垮厤闈欓粯涓㈠純缂栬緫锛?- * 绌烘€佺洿鎺ュ閫夋椂鍏堝姞杞介鏉″缓绔嬭褰曚笌妯℃澘涓婁笅鏂囷紝鎴愬姛鍚庤嚜鍔ㄨ鎺ユ壒閲忋€?- * 閫夋嫨鍣ㄦ墦寮€鏈熼棿淇濇寔 busy 閿佸畾鍏ュ彛锛岄槻姝㈤噸澶嶈皟鐢ㄥ畼鏂归€夋嫨鍣ㄥ鑷?- * 鍓嶄竴涓寫閫変細璇濊鎮疆锛堟壒閲忋€岄噸鏂伴€夋嫨銆嶅け鏁堢殑鏉ユ簮锛夛紱
+- * 鎵归噺鐩撮€氬垎鏀笉绉诲姩鍗曟潯閿氱偣锛岄€€鍑烘壒閲忎粛鍥炲埌鍘熷崟鏉¤褰曪紱
+- * 鎵归噺妯″紡涓嬪崟閫夎涓洪€€鍥炲崟鏉★紝璧伴€€鍑烘壒閲忔竻闄ゆā鏉夸繚瀛樼殑鎵规璁板綍锛?- * 閬垮厤鏃?savedBatchRecordIds 琚珛鍗虫仮澶嶈€岃鐩栧垰閫夎褰曘€?- */
+-async function chooseRecords() {
+-  if (busy.value) {
+-    status.value = "姝ｅ湪澶勭悊涓紝璇风◢鍊欏啀閫夋嫨璁板綍";
+-    return;
+-  }
++function requestLoadRecords(useBatchPicker = false) {
+   if (shouldGuardUnsavedNavigation(refreshTemplateDirtyState())) {
+     pendingContext.value = null;
+-    pendingLoadRequest.value = "records";
++    pendingLoadRequest.value = useBatchPicker ? "batch" : "current";
+     decisionDialog.value = "context";
+     return;
+   }
+-  busy.value = true;
+-  let active: FeishuSelection;
+-  let ids: string[];
+-  try {
+-    active = await getActiveSelection();
+-    ids = await selectRecordIds(active);
+-  } catch (cause) {
+-    busy.value = false;
+-    error.value = cause instanceof Error ? cause.message : "閫夋嫨璁板綍澶辫触";
+-    status.value = "閫夋嫨璁板綍鏈畬鎴?;
+-    return;
+-  }
+-  if (!ids.length) {
+-    busy.value = false;
+-    status.value = isBatchMode.value ? "鏈洿鏀规墦鍗拌褰曪紝鍘熸壒娆″凡淇濈暀" : "鏈€夋嫨璁板綍锛屼繚鎸佸師鐘舵€?;
+-    return;
+-  }
+-  if (ids.length === 1) {
+-    setPickedRecord({ tableId: active.tableId, viewId: active.viewId, recordId: ids[0] });
+-    if (isBatchMode.value) {
+-      // 鎵归噺妯″紡涓嬪崟閫夌瓑浠蜂簬銆屾竻闄ゆā鏉夸繚瀛樼殑鎵撳嵃璁板綍骞惰繑鍥炶鏉°€嶏細
+-      // 蹇呴』鍏堟竻闄?savedBatchRecordIds锛屽惁鍒欏崟鏉″姞杞戒細鎭㈠鏃ф壒娆°€?-      busy.value = false;
+-      void exitBatchMode();
+-      return;
+-    }
+-    void loadRecords(false);
+-    return;
+-  }
+-  if (designerRef.value && printJob.value && templateLoaded.value) {
+-    void loadBatchCandidate(undefined, ids);
+-    return;
+-  }
+-  setPickedRecord({ tableId: active.tableId, viewId: active.viewId, recordId: ids[0] });
+-  void (async () => {
+-    await loadRecords(false);
+-    if (printJob.value && templateLoaded.value && selectedTemplateId.value) {
+-      await loadBatchCandidate(undefined, ids);
+-    } else {
+-      status.value = "宸插姞杞介鏉¤褰曪紱妯℃澘灏辩华鍚庤閲嶆柊閫夋嫨鎵归噺璁板綍";
+-    }
+-  })();
++  void loadRecords(useBatchPicker);
+ }
+ 
+ function requestExitBatch() {
+@@ -1709,9 +1770,8 @@ async function resolveDecision(decision: "save" | "discard" | "cancel") {
+     if (decision === "save") {
+       const saved = await saveTemplate({ allowContextChange: true });
+       if (!saved) return;
+-      if ((request === "batch" || request === "records") && workspaceMode.value === "edit"
+-        && !await applyPreviewMode()) return;
+-    } else if (request === "batch" || request === "exit" || request === "records") {
++      if (request === "batch" && workspaceMode.value === "edit" && !await applyPreviewMode()) return;
++    } else if (request === "batch" || request === "exit") {
+       const loaded = isBatchMode.value && workspaceMode.value === "edit"
+         ? await restoreBatchEditBaseline()
+         : await loadTemplateAndPreview(printJob.value, selection.value, contextRevision,
+@@ -1723,7 +1783,6 @@ async function resolveDecision(decision: "save" | "discard" | "cancel") {
+     pendingContext.value = null;
+     pendingLoadRequest.value = null;
+     if (request === "exit") void exitBatchMode();
+-    else if (request === "records") void chooseRecords();
+     else {
+       if (request !== "batch") invalidateContext();
+       void loadRecords(request === "batch");
+@@ -1862,6 +1921,7 @@ async function exportPdf() {
+ 
+ onMounted(() => {
+   window.addEventListener("duowei-print:designer-load-error", handleDesignerLoadError);
++  window.addEventListener("message", handleAutomationConnectionMessage);
+   document.addEventListener("pointerdown", handleGlobalPointerDown);
+   document.addEventListener("keydown", handleGlobalKeydown);
+     document.addEventListener("click", handleDocumentCapture, true);
+@@ -1901,11 +1961,14 @@ onMounted(() => {
+ 
+ onBeforeUnmount(() => {
+   window.removeEventListener("duowei-print:designer-load-error", handleDesignerLoadError);
++  window.removeEventListener("message", handleAutomationConnectionMessage);
+   document.removeEventListener("pointerdown", handleGlobalPointerDown);
+   document.removeEventListener("keydown", handleGlobalKeydown);
+   document.removeEventListener("click", handleDocumentCapture, true);
+   if (statusToastTimer) clearTimeout(statusToastTimer);
+   if (batchProjectionSyncTimer) clearTimeout(batchProjectionSyncTimer);
++  if (automationConnectionProbeTimer) clearInterval(automationConnectionProbeTimer);
++  automationTemplateSync?.bridge?.dispose();
+   stopSelectionWatch?.();
+   stopDataSourceTerminology?.();
+   stopDataSourceEditingLifecycle?.();
+@@ -1945,6 +2008,8 @@ onBeforeUnmount(() => {
+       <span v-if="error">{{ error }}</span>
+       <button v-if="showBatchRetry" class="status-retry-button" type="button"
+         @click="retryBatchCandidate">閲嶈瘯鎵归噺璇诲彇</button>
++      <button v-if="automationConnectUrl" class="status-retry-button" type="button"
++        :disabled="busy" @click="connectAutomation">杩炴帴鑷姩鍖?/button>
+     </div>
+ 
+     <section class="workspace" :class="`workspace-${workspaceMode}`">
+@@ -1955,46 +2020,45 @@ onBeforeUnmount(() => {
+             <span class="sidebar-count">{{ visibleTemplateCount }} 涓?/span>
+           </div>
+           <div class="template-list">
+-            <template v-for="entry in templateListEntries" :key="entry.type === 'saved' ? entry.item.id : 'automatic'">
+-              <div v-if="entry.type === 'saved'" class="template-directory-row"
+-                :class="{ 'template-directory-row-active': selectedTemplateId === entry.item.id }">
+-                <button class="template-item" :class="{ 'template-item-active': selectedTemplateId === entry.item.id }"
+-                  :disabled="busy" @click="requestTemplateSelection(entry.item.id)">
+-                  <span class="template-item-copy">
+-                    <strong>{{ entry.item.name }}</strong>
+-                    <small>
+-                      <span class="template-layout-label">{{ templateLayoutLabel(entry.item.template) }}</span>
+-                      <span v-if="entry.item.id === templateCollection.defaultId" class="default-tag">榛樿</span>
+-                    </small>
+-                  </span>
+-                </button>
+-                <div class="menu-anchor template-more-anchor">
+-                  <button class="template-more-button" type="button" aria-haspopup="menu"
+-                    :aria-expanded="activeTemplateMenuId === entry.item.id" :aria-label="`${entry.item.name}鐨勬洿澶氭搷浣渀"
+-                    :disabled="busy" @click.stop="toggleTemplateMenu(entry.item.id)">路路路</button>
+-                  <div v-if="activeTemplateMenuId === entry.item.id" class="action-menu template-action-menu" role="menu">
+-                    <button class="action-menu-item" role="menuitem" :disabled="busy"
+-                      @click="requestDirectoryAction('rename', entry.item)">閲嶅懡鍚?/button>
+-                    <button v-if="entry.item.id !== templateCollection.defaultId" class="action-menu-item" role="menuitem"
+-                      :disabled="busy" @click="requestDirectoryAction('default', entry.item)">璁句负榛樿妯℃澘</button>
+-                    <button class="action-menu-item action-menu-danger" role="menuitem"
+-                      :disabled="busy || (entry.item.id === templateCollection.defaultId && templateCollection.templates.length > 1)"
+-                      @click="requestDirectoryAction('remove', entry.item)">鍒犻櫎妯℃澘</button>
+-                  </div>
+-                </div>
+-              </div>
+-              <button v-else
+-                class="template-item"
+-                :class="{ 'template-item-active': selectedTemplateId === 'automatic' }"
+-                :disabled="!templateLoaded"
+-                @click="requestTemplateSelection('automatic')"
+-              >
++            <button
++              v-if="!templateCollection.templates.length || selectedTemplateId === 'automatic'"
++              class="template-item"
++              :class="{ 'template-item-active': selectedTemplateId === 'automatic' }"
++              :disabled="!templateLoaded"
++              @click="requestTemplateSelection('automatic')"
++            >
++              <span class="template-item-copy">
++                <strong>鑷姩妯℃澘</strong>
++                <small>{{ templateFallback ? '鍙鍥為€€' : '鏈繚瀛? }}</small>
++              </span>
++            </button>
++            <div v-for="item in templateCollection.templates" :key="item.id" class="template-directory-row"
++              :class="{ 'template-directory-row-active': selectedTemplateId === item.id }">
++              <button class="template-item" :class="{ 'template-item-active': selectedTemplateId === item.id }"
++                :disabled="busy" @click="requestTemplateSelection(item.id)">
+                 <span class="template-item-copy">
+-                  <strong>鑷姩妯℃澘</strong>
+-                  <small>{{ templateFallback ? '鍙鍥為€€' : '鏈繚瀛? }}</small>
++                  <strong>{{ item.name }}</strong>
++                  <small>
++                    <span class="template-layout-label">{{ templateLayoutLabel(item.template) }}</span>
++                    <span v-if="item.id === templateCollection.defaultId" class="default-tag">榛樿</span>
++                  </small>
+                 </span>
+               </button>
+-            </template>
++              <div class="menu-anchor template-more-anchor">
++                <button class="template-more-button" type="button" aria-haspopup="menu"
++                  :aria-expanded="activeTemplateMenuId === item.id" :aria-label="`${item.name}鐨勬洿澶氭搷浣渀"
++                  :disabled="busy" @click.stop="toggleTemplateMenu(item.id)">路路路</button>
++                <div v-if="activeTemplateMenuId === item.id" class="action-menu template-action-menu" role="menu">
++                  <button class="action-menu-item" role="menuitem" :disabled="busy"
++                    @click="requestDirectoryAction('rename', item)">閲嶅懡鍚?/button>
++                  <button v-if="item.id !== templateCollection.defaultId" class="action-menu-item" role="menuitem"
++                    :disabled="busy" @click="requestDirectoryAction('default', item)">璁句负榛樿妯℃澘</button>
++                  <button class="action-menu-item action-menu-danger" role="menuitem"
++                    :disabled="busy || (item.id === templateCollection.defaultId && templateCollection.templates.length > 1)"
++                    @click="requestDirectoryAction('remove', item)">鍒犻櫎妯℃澘</button>
++                </div>
++              </div>
++            </div>
+           </div>
+           <div class="template-create menu-anchor">
+             <button class="button button-secondary button-new-template" type="button" aria-haspopup="menu"
+@@ -2098,11 +2162,6 @@ onBeforeUnmount(() => {
+                 : `${renderedLayoutLabel} 路 ${renderedOutputPageCount(renderedPages)} 椤礰 }}</span>
+           </div>
+           <div class="workspace-actions">
+-            <button v-if="!isBatchMode || presentation.showRecordPicker"
+-              class="button button-secondary button-pick-record"
+-              :disabled="busy" @click="chooseRecords">
+-              {{ recordPickerLabel }}
+-            </button>
+             <div v-if="isBatchMode" class="batch-layout-switch" role="group" aria-label="鎵归噺鎺掔増">
+               <span>鎵归噺鎺掔増</span>
+               <button v-for="option in BATCH_LAYOUT_OPTIONS" :key="option.kind" type="button"
+@@ -2116,6 +2175,10 @@ onBeforeUnmount(() => {
+               :disabled="busy" @click="requestPreviewMode">
+               <span aria-hidden="true">鈫?/span> 杩斿洖{{ isBatchMode ? "鎵归噺棰勮" : "棰勮" }}
+             </button>
++            <button v-if="presentation.showRecordPicker" class="button button-secondary button-record-picker"
++              :disabled="busy || !templateLoaded" @click="requestLoadRecords(true)">
++              {{ batchWorkspaceActions.selectLabel }}
++            </button>
+             <button v-if="presentation.showExitBatch" class="button button-tertiary" :disabled="busy"
+               @click="requestExitBatch">閫€鍑烘壒閲?/button>
+             <button v-if="presentation.showOutputs" class="button button-secondary"
+@@ -2148,12 +2211,11 @@ onBeforeUnmount(() => {
+               </div>
+             </div>
+             <div v-else class="preview-empty">
+-              <strong>{{ !hasSelectedRecord ? '璇烽€夋嫨璁板綍' : previewError ? '鎵撳嵃棰勮鐢熸垚澶辫触' : '姝ｅ湪鐢熸垚鎵撳嵃棰勮' }}</strong>
+-              <span v-if="!hasSelectedRecord">璇峰厛鐐瑰嚮銆岄€夋嫨璁板綍銆嶅嬀閫夐渶瑕佹墦鍗扮殑璁板綍</span>
+-              <span v-else-if="previewError">{{ previewError }}</span>
++              <strong>{{ previewError ? '鎵撳嵃棰勮鐢熸垚澶辫触' : '姝ｅ湪鐢熸垚鎵撳嵃棰勮' }}</strong>
++              <span v-if="previewError">{{ previewError }}</span>
+               <span v-else-if="!templateLoaded">璇诲彇褰撳墠璁板綍涓庢ā鏉夸腑</span>
+               <span v-else>鍒囧洖姝ゆ爣绛鹃〉鍚庯紝棰勮浼氱户缁敓鎴?/span>
+-              <button v-if="previewError && hasSelectedRecord" class="button button-outline" :disabled="busy" @click="previewOutput">閲嶈瘯棰勮</button>
++              <button v-if="previewError" class="button button-outline" :disabled="busy" @click="previewOutput">閲嶈瘯棰勮</button>
+             </div>
+           </section>
+         </div>
+@@ -2467,16 +2529,6 @@ onBeforeUnmount(() => {
+   .button { transition: none; }
+   .status-line-loading .status-indicator { animation: none; }
+ }
+-/* 渚ц竟鏍忕獎瀹瑰櫒闄嶇骇锛氭瀬绐勬椂妯℃澘/鎿嶄綔鍖烘敼涓洪《閮ㄥ爢鍙狅紝鐢诲竷鍗犳弧鍓╀綑楂樺害 */
+-@media (max-width: 430px) {
+-  .workspace, .workspace-edit { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
+-  .sidebar { max-height: 168px; overflow-y: auto; border-right: 0; border-bottom: 1px solid var(--ui-border); }
+-  .workspace-toolbar { padding: 5px 6px; }
+-  .workspace-heading span { font-size: 11px; }
+-  .workspace-actions { flex-wrap: wrap; justify-content: flex-end; }
+-  .preview-surface { padding: 8px 6px 0; }
+-  .status-line { padding: 6px 8px; font-size: 11px; }
+-}
+ /* Approved field-unit design: compact neutral fields and warm detail containers. */
+ .source-panel { padding: 14px 12px; }
+ .source-search { display: flex; align-items: center; gap: 8px; height: 34px; margin-bottom: 18px; padding: 0 10px; border: 1px solid #e9ecf0; border-radius: 5px; background: #f7f8fa; }

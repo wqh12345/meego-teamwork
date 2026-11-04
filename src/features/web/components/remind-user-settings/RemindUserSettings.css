@@ -1,0 +1,369 @@
+.remindUserSettings {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.remindUserSettings .selected-user-left {
+  flex: 1;
+  height: 370px;
+  overflow-y: hidden;
+  border-radius: 16px;
+  border: 1px solid #ededed;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+.remindUserSettings .selected-user-left .select-input {
+  padding: 20px 24px 8px;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 20;
+}
+
+.remindUserSettings .selected-user-left .select-tabs {
+  padding: 0 24px 0px;
+  position: sticky;
+  top: 56px;
+  background-color: white;
+  z-index: 20;
+  /* border-bottom: 1px solid #f0f0f0; */
+}
+.remindUserSettings .selected-user-left .select-input .ant-input-affix-wrapper {
+  height: 36px;
+  border-radius: 18px 18px 18px 18px;
+  opacity: 1;
+  border: 1px solid #ededed;
+  /* 确保输入框完全可见 */
+  z-index: 20;
+  background-color: white;
+  display: flex;
+  align-items: center;
+}
+.remindUserSettings .selected-user-left .select-content {
+  /* 让内容区域自动填充剩余空间 */
+  flex: 1;
+  overflow: hidden;
+  /* 添加内边距以对齐 */
+  /* padding: 0 24px; */
+}
+
+/* 成员列表容器，只允许这部分滚动 */
+.remindUserSettings .selected-user-left .select-content > .ant-checkbox-group {
+  height: calc(100% - 40px);
+  overflow-y: auto;
+  display: block;
+  overflow-x: hidden;
+}
+
+/* 全选复选框样式 */
+.select-all-item {
+  font-weight: 600;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 8px;
+  margin-bottom: 0 !important;
+  padding-top: 8px;
+  /* 确保全选部分保持固定在顶部 */
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 10;
+}
+
+/* 全选复选框专用样式 */
+.select-all-checkbox .ant-checkbox-inner {
+  width: 16px !important;
+  height: 16px !important;
+  border: 1px solid #d9d9d9 !important;
+}
+
+/* 选中状态 */
+.select-all-checkbox.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #1890ff !important;
+  border-color: #1890ff !important;
+}
+
+/* 半选状态 - 强制覆盖所有默认样式 */
+.select-all-checkbox.ant-checkbox-indeterminate .ant-checkbox-inner {
+  background-color: #ffffff !important;
+  border-color: #1890ff !important;
+  border-width: 2px !important;
+  border-style: solid !important;
+  box-shadow: none !important;
+}
+
+/* 半选状态内部样式 */
+.select-all-checkbox.ant-checkbox-indeterminate .ant-checkbox-inner::after {
+  content: '' !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: 10px !important;
+  height: 10px !important;
+  background-color: #1890ff !important;
+  transform: translate(-50%, -50%) !important;
+  border: none !important;
+  opacity: 1 !important;
+  display: block !important;
+}
+
+/* 使用ID选择器增加优先级 */
+#root .select-all-checkbox.ant-checkbox-indeterminate .ant-checkbox-inner {
+  background-color: #ffffff !important;
+  border-color: #1890ff !important;
+}
+
+#root .select-all-checkbox.ant-checkbox-indeterminate .ant-checkbox-inner::after {
+  background-color: #1890ff !important;
+}
+.remindUserSettings .selected-user-left .select-content .ant-breadcrumb-link a {
+  display: inline-block;
+  max-width: 152px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+.remindUserSettings .selected-user-left .select-content .ant-breadcrumb {
+  padding-left: 27px;
+  padding-right: 5px;
+  line-height: 30px;
+  margin-bottom: 10px;
+}
+.remindUserSettings .selected-user-left .select-content .ant-checkbox-group {
+  display: block;
+  margin-left: 0 !important;
+}
+.remindUserSettings .selected-user-left .select-content .select-item {
+  position: relative;
+  width: 100%;
+  min-height: 40px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+ padding:0  24px;
+  cursor: pointer;
+}
+
+
+/* 复选框样式优化 */
+.remindUserSettings .selected-user-left .select-content .select-item .ant-checkbox {
+  flex-shrink: 0;
+  margin-right: 8px;
+  position: relative;
+  top: 0;
+  transform: none;
+}
+
+/* 调整复选框与文本的间距和对齐 */
+.remindUserSettings .ant-checkbox + span {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  cursor: pointer;
+}
+.remindUserSettings .selected-user-left .select-content .select-item .select-item-txt {
+  margin-left: 8px; /* 统一间距 */
+  display: inline-block;
+  align-items: center;
+  max-width:187px; /* 为头像和间距留出空间 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  word-break: break-all;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* 垂直居中布局样式 */
+.selected-item-vertical-center {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.remindUserSettings
+  .selected-user-left
+  .select-content
+  .select-item
+  .select-item-num {
+  margin-left: 5px;
+}
+.remindUserSettings
+  .selected-user-left
+  .select-content
+  .select-item
+  .select-item-btn {
+  position: absolute;
+  right: 5px;
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 20px;
+}
+.remindUserSettings
+  .selected-user-left
+  .select-content
+  .ant-tree-treenode-selected {
+  width: 100%;
+  background-color: #ececfe;
+}
+.remindUserSettings .selected-user-right {
+  flex: 1;
+  height: 370px;
+  overflow-y: hidden;
+  padding-bottom: 24px;
+  margin-left: 24px;
+  border-radius: 16px;
+  border: 1px solid #ededed;
+  box-sizing: border-box;
+  color: #262626;
+}
+.remindUserSettings .selected-user-right .selected-title {
+  padding: 24px 24px 16px 24px;
+  font-weight: 550;
+  user-select: none;
+}
+.remindUserSettings .selected-user-right .selected-box {
+  padding: 0 24px 8px 24px;
+  display: flex;
+  justify-content: space-between;
+  user-select: none;
+}
+.remindUserSettings .selected-user-right .selected-box .select-box-left {
+  color: #727272;
+}
+.remindUserSettings .selected-user-right .selected-box .ant-btn {
+  padding: 0;
+  height: 14px;
+}
+.remindUserSettings .selected-user-right .selected-content {
+  height: 350px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.remindUserSettings .selected-user-right .selected-content .selected-item {
+  width: 100%;
+  height: 40px;
+  /* line-height: 40px; */
+  line-height:1;
+  padding-left: 24px;
+  padding-right: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+.remindUserSettings
+  .selected-user-right
+  .selected-content
+  .selected-item:hover {
+  background: rgba(66, 71, 246, 0.05);
+  cursor: pointer;
+}
+.remindUserSettings
+  .selected-user-right
+  .selected-content
+  .selected-item
+  .selected-item-left {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  display: flex;
+  align-items: center;
+}
+.remindUserSettings
+  .selected-user-right
+  .selected-content
+  .selected-item
+  .selected-item-name {
+  margin-left: 0px !important;
+  font-size: 14px;
+  line-height: 20px;
+  display: inline-block;
+  /* max-width: calc(100% - 28px); */
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 优化头像显示样式 */
+.remindUserSettings .ant-avatar {
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+/* 确保复选框正确显示 */
+.remindUserSettings .ant-checkbox {
+  position: relative;
+  top: 0;
+  margin-right: 8px;
+}
+.remindUserSettings .tenant-user {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  line-height: 14px;
+  font-size: 12px;
+  text-align: center;
+  border: 2px solid #4247f6;
+  background-color: #ffffff;
+  border-radius: 50%;
+  color: #4247f6;
+}
+
+/* 标签页样式 */
+.remindUserSettings .ant-tabs-ink-bar {
+  background-color: #1890ff !important;
+  height: 2px !important;
+  /* border-radius: 2px !important; */
+  /* padding-top: 5px; */
+}
+
+.remindUserSettings .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #1890ff !important;
+  /* font-weight: bold !important; */
+}
+
+.remindUserSettings .ant-tabs-tab {
+  padding: 8px 5px;
+  font-size: 14px;
+  /* width: 20px!important ;
+    right:  14px !important; */
+}
+.remindUserSettings .ant-tabs-nav-operations {
+  display: none !important;
+}
+
+.remindUserSettings .ant-tabs-dropdown-menu {
+  display: none !important;
+}
+.remindUserSettings .ant-tabs-tab:hover {
+  color: #40a9ff;
+}
+
+.remindUserSettings .ant-tabs-tab-bar {
+  /* border-bottom: 1px solid #f0f0f0; */
+  margin-bottom: 20px;
+}
+
+
+.remindUserSettings .selected-item-unavailable {
+  color: #cccccc;
+}
+.remindUserSettings .ant-tabs-nav{
+  margin-bottom: 6px !important;
+}
+.remindUserSettings .select-all-checkbox .ant-checkbox-inner {
+    width: 18px !important;
+    height: 18px !important;
+    border: 1px solid #d9d9d9 !important;
+}
+.selected-item-unavailable .semi-tag-content-ellipsis {
+    color: #cccccc;
+}

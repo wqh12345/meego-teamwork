@@ -1,0 +1,92 @@
+.management-warp {
+  .management-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    .top-left {
+      .ant-btn-link {
+        padding: 0;
+      }
+    }
+    .top-right {
+    }
+  }
+  .management-content {
+    margin-top: 24px;
+    .content-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .content-top-box {
+        min-width: 170px;
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid #ededed;
+        border-radius: 6px;
+        padding: 12px 12px;
+        .box-left {
+          min-width: 125px;
+          .icon {
+            margin-right: 5px;
+            color: #4247f6;
+          }
+        }
+        .box-right {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          word-break: break-all;
+        }
+      }
+      .flex-box {
+        width: 20px;
+        height: 20px;
+      }
+    }
+    .content-body{
+      // height: calc(100vh - 210px);
+      .content-table {
+        margin-top: 24px;
+        .content-table-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          .header-title{
+            font-weight: 500;
+          }
+        }
+        .content-table-body{
+          margin-top: 16px;
+          th.management-custom-field-column {
+            min-width: 0;
+            white-space: nowrap;
+
+            .ant-table-column-title {
+              min-width: 0;
+              overflow: hidden;
+            }
+          }
+          .management-custom-field-column-title {
+            display: block;
+            width: 250px;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+          .management-custom-field-column-value {
+            display: block;
+            width: 230px;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,3 @@
+/* Tailwind CSS - 仅引入 components 和 utilities，不引入 base（避免覆盖 antd-mobile） */
+@tailwind components;
+@tailwind utilities;

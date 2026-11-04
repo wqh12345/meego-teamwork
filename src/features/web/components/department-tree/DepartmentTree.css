@@ -1,0 +1,184 @@
+.dept-tree-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.dept-tree-content {
+  width: 100%;
+  height: 330px;
+  overflow: hidden;
+}
+
+/* 部门行 */
+.dept-tree-dept-row {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  cursor: pointer;
+  padding-right: 16px;
+  transition: background-color 0.2s ease;
+}
+
+.dept-tree-dept-row:hover {
+  background-color: #f5f5f5;
+}
+
+/* 展开/收起图标 */
+.dept-tree-expand-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  margin-right: 6px;
+  color: #8F959E;
+  font-size: 10px;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.dept-tree-expand-icon .anticon {
+  font-size: 10px;
+}
+
+/* 部门头像 */
+.dept-tree-avatar.ant-avatar {
+  background: #4247F6;
+  color: #fff;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+
+.dept-tree-avatar.ant-avatar > .anticon {
+  color: #fff;
+  font-size: 12px;
+}
+
+/* 部门名称 */
+.dept-tree-dept-name {
+  font-size: 14px;
+  color: #1F2329;
+  line-height: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+/* 全选以下员工行 */
+.dept-tree-select-all-row {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding-right: 16px;
+}
+
+.dept-tree-select-all-row .ant-checkbox-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.dept-tree-select-all-text {
+  font-size: 14px;
+  color: #1F2329;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+/* 成员行 */
+.dept-tree-member-row {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding-right: 16px;
+  padding-left: 24px;
+  transition: background-color 0.2s ease;
+}
+
+.dept-tree-member-row:hover {
+  background-color: #f5f5f5;
+}
+
+.dept-tree-member-row .ant-checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.dept-tree-member-row .ant-checkbox + span {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+/* 半选状态样式 */
+.dept-tree-select-all-row .ant-checkbox-indeterminate .ant-checkbox-inner {
+  background-color: #ffffff !important;
+  border-color: #4247F6 !important;
+}
+
+.dept-tree-select-all-row .ant-checkbox-indeterminate .ant-checkbox-inner::after {
+  content: '' !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: 8px !important;
+  height: 8px !important;
+  /* background-color: #1890ff !important; */
+  transform: translate(-50%, -50%) !important;
+  border: none !important;
+  opacity: 1 !important;
+  display: block !important;
+}
+
+/* 选中状态 */
+/* .dept-tree-select-all-row .ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #1890ff !important;
+  border-color: #1890ff !important;
+} */
+
+/* 搜索结果 */
+.dept-tree-search-results {
+  width: 100%;
+  height: 100%;
+}
+
+/* 空数据 */
+.dept-tree-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  width: 100%;
+}
+
+/* 复选框间距 */
+.dept-tree-member-row .ant-checkbox {
+  margin-right: 8px;
+}
+
+.dept-tree-select-all-row .ant-checkbox {
+  margin-right: 8px;
+}
+
+/* 滚动条样式 */
+.dept-tree-content ::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dept-tree-content ::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.dept-tree-content ::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.dept-tree-content ::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

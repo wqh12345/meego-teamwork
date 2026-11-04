@@ -1,0 +1,699 @@
+.selected-setting-warp {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.selected-setting-warp .selected-seat-content{
+  margin-top: 5px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.selected-setting-warp .selected-user-left {
+  flex: 1;
+  height: 448px;
+  overflow-y: auto;
+  border-radius: 16px;
+  border: 1px solid #ededed;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+.selected-setting-warp .selected-user-left .select-input {
+  padding: 15px 24px 8px;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 20;
+}
+
+.selected-setting-warp .selected-user-left .select-tabs {
+  padding: 0 24px 0px !important;
+  position: sticky;
+  top: 56px;
+  background-color: white;
+  z-index: 20;
+  border-bottom: none;
+}
+.selected-setting-warp .selected-user-left .select-input .ant-input-affix-wrapper {
+  height: 36px;
+  border-radius: 8px;
+  opacity: 1;
+  border: 1px solid #ededed;
+  /* 确保输入框完全可见 */
+  z-index: 20;
+  background-color: white;
+  display: flex;
+  align-items: center;
+}
+.selected-setting-warp .selected-user-left .select-content {
+  /* 让内容区域自动填充剩余空间 */
+  flex: 1;
+  overflow-y: auto;
+  /* 显示滚动条以便滚动 */
+  scrollbar-width: thin; /* Firefox */
+  -ms-overflow-style: auto; /* IE and Edge */
+  /* 添加内边距以对齐 */
+  padding: 0 10px 0 16px;
+  /* 设置最小高度确保内容可以滚动 */
+  min-height: 200px;
+}
+
+/* 显示WebKit浏览器（Chrome、Safari）的滚动条 */
+.selected-setting-warp .selected-user-left .select-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.selected-setting-warp .selected-user-left .select-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.selected-setting-warp .selected-user-left .select-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.selected-setting-warp .selected-user-left .select-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 成员列表容器，允许滚动 */
+.selected-setting-warp .selected-user-left .select-content > .ant-checkbox-group {
+  max-height: none;
+  overflow-y: visible;
+  display: block;
+}
+
+/* 全选复选框样式 */
+.select-all-item {
+  font-weight: 600;
+  border-bottom: none;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+  padding-top: 8px;
+  /* 确保全选部分保持固定在顶部 */
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 10;
+}
+
+/* 全选复选框专用样式 */
+.select-all-checkbox .ant-checkbox-inner {
+  width: 16px !important;
+  height: 16px !important;
+  border: 1px solid #d9d9d9 !important;
+}
+
+/* 选中状态 */
+.select-all-checkbox.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #1890ff !important;
+  border-color: #1890ff !important;
+}
+
+/* 半选状态 - 强制覆盖所有默认样式 */
+.select-all-checkbox.ant-checkbox-indeterminate .ant-checkbox-inner {
+  background-color: #ffffff !important;
+  border-color: #1890ff !important;
+  border-width: 2px !important;
+  border-style: solid !important;
+  box-shadow: none !important;
+}
+
+/* 半选状态内部样式 */
+.select-all-checkbox.ant-checkbox-indeterminate .ant-checkbox-inner::after {
+  content: '' !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: 10px !important;
+  height: 10px !important;
+  background-color: #1890ff !important;
+  transform: translate(-50%, -50%) !important;
+  border: none !important;
+  opacity: 1 !important;
+  display: block !important;
+}
+
+/* 使用ID选择器增加优先级 */
+#root .select-all-checkbox.ant-checkbox-indeterminate .ant-checkbox-inner {
+  background-color: #ffffff !important;
+  border-color: #1890ff !important;
+}
+
+#root .select-all-checkbox.ant-checkbox-indeterminate .ant-checkbox-inner::after {
+  background-color: #1890ff !important;
+}
+.selected-setting-warp .selected-user-left .select-content .ant-breadcrumb-link a {
+  display: inline-block;
+  max-width: 152px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+.selected-setting-warp .selected-user-left .select-content .ant-breadcrumb {
+  padding-left: 27px;
+  padding-right: 5px;
+  line-height: 30px;
+  margin-bottom: 10px;
+}
+.selected-setting-warp .selected-user-left .select-content .ant-checkbox-group {
+  display: block;
+  margin-left: 0 !important;
+}
+.selected-setting-warp .selected-user-left .select-content .select-item {
+  position: relative;
+  width: 100%;
+  min-height: 40px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  cursor: pointer;
+}
+
+
+/* 复选框样式优化 */
+.selected-setting-warp .selected-user-left .select-content .select-item .ant-checkbox {
+  flex-shrink: 0;
+  margin-right: 2px;
+  position: relative;
+  top: 0;
+  transform: none;
+}
+.selected-setting-warp .selected-user-left .select-content .select-item label {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+/* 调整复选框与文本的间距和对齐 */
+.selected-setting-warp .ant-checkbox + span {
+  /* flex: 1; */
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  cursor: pointer;
+}
+.standards-setting .selected-user-left .select-content .select-item .select-item-txt-2 {
+  margin-left:4px; /* 统一间距 */
+  display: inline-block;
+  align-items: center;
+  max-width: 105px; /* 为头像和间距留出空间 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  word-break: break-all;
+  font-size: 14px;
+  line-height: 20px;
+}
+.selected-user-warp
+  .selected-user-left
+  .select-content
+  .select-item
+  .select-item-num {
+  margin-left: 5px;
+}
+.selected-user-warp
+  .selected-user-left
+  .select-content
+  .select-item
+  .select-item-btn {
+  position: absolute;
+  right: 5px;
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 20px;
+}
+.selected-user-warp
+  .selected-user-left
+  .select-content
+  .ant-tree-treenode-selected {
+  width: 100%;
+  background-color: #ececfe;
+}
+.selected-setting-warp .selected-user-right {
+  flex: 1;
+  height: 448px;
+  overflow-y: auto;
+  padding-bottom: 24px;
+  margin-left: 24px;
+  /* 隐藏滚动条但保留滚动功能 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  border-radius: 16px;
+  border: 1px solid #ededed;
+  box-sizing: border-box;
+  color: #262626;
+}
+
+/* 隐藏WebKit浏览器（Chrome、Safari）的滚动条 */
+.selected-setting-warp .selected-user-right::-webkit-scrollbar {
+  display: none;
+}
+.selected-setting-warp .selected-user-right .selected-title {
+  padding: 15px 24px 0px 24px;
+  font-weight: 550;
+  user-select: none;
+}
+.selected-setting-warp .selected-user-right .item-team-member-count {
+  font-size: 14px;
+  color: #727272;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+.selected-setting-warp .selected-user-right .selected-box {
+  padding: 0 24px 8px 24px;
+  display: flex;
+  justify-content: space-between;
+  user-select: none;
+}
+.selected-setting-warp .selected-user-right .selected-box .select-box-left {
+  color: #727272;
+}
+.selected-setting-warp .selected-user-right .selected-box .ant-btn {
+  padding: 0;
+  height: 14px;
+}
+.selected-setting-warp .selected-user-right .selected-content {
+  height: auto;
+  max-height: 370px;
+  overflow-y: auto;
+  scrollbar-width: thin; /* Firefox */
+  -ms-overflow-style: auto; /* IE and Edge */
+}
+
+/* 显示WebKit浏览器（Chrome、Safari）的滚动条 */
+.selected-setting-warp .selected-user-right .selected-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.selected-setting-warp .selected-user-right .selected-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.selected-setting-warp .selected-user-right .selected-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.selected-setting-warp .selected-user-right .selected-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+.selected-setting-warp .selected-user-right .selected-content .selected-item {
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 24px;
+  padding-right: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+.selected-setting-warp .selected-seat-right .selected-content .selected-item {
+  padding-left: 16px;
+  padding-right: 12px;
+  width: 100%;
+  height: 40px;
+  line-height: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box
+}
+.selected-user-warp
+  .selected-user-right
+  .selected-content
+  .selected-item:hover {
+  background: rgba(66, 71, 246, 0.05);
+  cursor: pointer;
+}
+.selected-user-warp
+  .selected-user-right
+  .selected-content
+  .selected-item
+  .selected-item-left {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  display: flex;
+  align-items: center;
+}
+.selected-user-warp
+  .selected-user-right
+  .selected-content
+  .selected-item
+  .selected-item-name {
+  margin-left: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  display: inline-block;
+  max-width: calc(100% - 28px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 优化头像显示样式 */
+.selected-setting-warp .ant-avatar {
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+/* 确保复选框正确显示 */
+.selected-setting-warp .ant-checkbox {
+  position: relative;
+  top: 0;
+  margin-right: 8px;
+}
+.selected-setting-warp .tenant-user {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  line-height: 14px;
+  font-size: 12px;
+  text-align: center;
+  border: 2px solid #4247f6;
+  background-color: #ffffff;
+  border-radius: 50%;
+  color: #4247f6;
+}
+
+/* 标签页样式 */
+.selected-setting-warp .ant-tabs-ink-bar {
+  background-color: #3D42D1 !important;
+  height: 2px !important;
+  /* border-radius: 2px !important; */
+  /* padding-top: 5px; */
+}
+
+.selected-setting-warp .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #3D42D1 !important;
+  /* font-weight: bold !important; */
+}
+
+.selected-setting-warp .ant-tabs-tab {
+  padding: 8px 5px;
+  font-size: 14px;
+  /* width: 20px!important ;
+    right:  14px !important; */
+}
+.selected-setting-warp .ant-tabs-nav-operations {
+  display: none !important;
+}
+.selected-setting-warp .ant-tabs-nav{
+  margin-bottom: 0 !important;
+}
+.selected-setting-warp .ant-tabs-dropdown-menu {
+  display: none !important;
+}
+.selected-setting-warp .ant-tabs-tab:hover {
+  color: #40a9ff;
+}
+
+.selected-setting-warp .ant-tabs-tab-bar {
+  /* border-bottom: 1px solid #f0f0f0; */
+  margin-bottom: 20px;
+}
+
+/* Chrome, Safari and Opera 隐藏滚动条 */
+.selected-setting-warp .selected-user-right::-webkit-scrollbar,
+.selected-setting-warp .select-content::-webkit-scrollbar,
+.selected-setting-warp .selected-user-left .select-content > .ant-checkbox-group::-webkit-scrollbar {
+  display: none;
+}
+
+/* SeatSettings.css */
+.selected-setting-warp .select-wrapper {
+  width: 100%;
+  height: 480px;
+  position: relative;
+}
+
+.selected-setting-warp .select-tabs {
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 0;
+}
+
+.selected-setting-warp .team-navigation {
+  background-color: #fafafa;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 8px 16px !important;
+}
+
+.selected-setting-warp .team-navigation .ant-btn {
+  font-size: 12px;
+  padding: 4px 8px;
+  height: auto;
+}
+
+.selected-setting-warp.select-search {
+  padding: 16px;
+  margin-bottom: 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.selected-setting-warp.select-search .ant-input {
+  border-radius: 4px;
+}
+
+.selected-setting-warp .select-search .ant-input-prefix {
+  padding-right: 8px;
+}
+
+.selected-setting-warp.select-content {
+  height: 300px;
+  overflow-y: auto;
+  padding: 0 4px;
+}
+
+.selected-setting-warp .select-item {
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  position: relative;
+}
+
+.selected-setting-warp.select-item:hover {
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+.selected-setting-warp.select-item .ant-checkbox {
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.selected-setting-warp .select-item-txt {
+  /* margin-left: 8px; */
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.85);
+  flex: 1;
+}
+
+.selected-setting-warp .team-button-container {
+  display: flex;
+  align-items: center;
+}
+
+.selected-setting-warp.team-button-container .ant-btn {
+  margin-left: 8px;
+  font-size: 12px;
+  height: auto;
+  padding: 4px 8px;
+}
+
+/* 团队层级下的项目样式 */
+.selected-setting-warp.team-level-item .ant-checkbox {
+  margin-right: 12px;
+}
+
+/* 团队成员层级下的项目样式 */
+.selected-setting-warp .member-level-item .ant-checkbox {
+  margin-right: 12px;
+}
+
+/* 半选状态样式增强 */
+/* .ant-checkbox-indeterminate .ant-checkbox-inner::after {
+  transform: scale(1.2);
+} */
+
+.selected-setting-warp.selected-wrapper {
+  padding: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.selected-setting-warp .selected-title {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.selected-setting-warp.selected-users {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.selected-setting-warp .selected-user {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  border-radius: 16px;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.selected-setting-warp .selected-user-avatar {
+  margin-right: 6px;
+}
+
+.selected-setting-warp .selected-user-name {
+  margin-right: 6px;
+}
+
+.selected-setting-warp.selected-user-remove {
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.45);
+  transition: color 0.3s;
+}
+
+.selected-setting-warp .selected-user-remove:hover {
+  color: rgba(0, 0, 0, 0.85);
+}
+
+/* 滚动条样式 */
+.selected-setting-warp.select-content::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.selected-setting-warp.select-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.selected-setting-warp .select-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.select-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 导航按钮样式 */
+.nav-back-button .anticon {
+  font-size: 12px;
+  margin-right: 4px;
+}
+
+/* 确保复选框状态正确显示 */
+.team-checkbox {
+  position: relative;
+}
+
+/* 为全选复选框添加样式 */
+.select-all-container .ant-checkbox {
+  margin-right: 8px;
+}
+/* .selected-team-container {
+  border-bottom: 1px solid #f0f0f0;
+} */
+
+.selected-setting-warp .selected-team {
+  /* background-color: #fafafa; */
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+
+.team-members-list {
+  /* background-color: #f9f9f9; */
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.selected-setting-warp .selected-user-right .selected-content .team-member {
+  border: none;
+  /* margin-bottom: 2px; */
+  padding-left: 47px;
+}
+
+.team-member.selected {
+  background-color: #f0f8ff;
+}
+
+.team-member:hover {
+  background-color: #f5f5f5;
+}
+
+.empty-team-members {
+  color: #999;
+  font-size: 12px;
+  padding: 8px 16px;
+  text-align: center;
+}
+/* 选中项置灰样式 */
+.selected-item-grayed .selected-item-name,
+.selected-item-grayed .empty-team-members {
+  color: #ccc !important;
+}
+
+.selected-item-grayed .selected-item-name span {
+  color: #bbb !important;
+}
+.selected-setting-warp .selected-item-team-name{
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 180px;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+.selected-setting-warp .team-teamMemberVoList-num{
+  color: #999;
+  margin-left: 2px;
+}
+.selected-setting-warp .selected-item-grayed .semi-tag-content-ellipsis {
+    color: #cccccc;
+}
+
+/* 部门Tab集成样式 */
+.selected-setting-warp .dept-tab-content {
+  height: 330px;
+  overflow: hidden;
+}
+
+.selected-setting-warp .dept-tab-content .dept-tree-container {
+  height: 100%;
+}
+
+.selected-setting-warp .dept-tab-content .dept-tree-content {
+  height: 100%;
+}
+
+/* Tooltip 样式优化 */
+/* .ant-tooltip-inner {
+  background-color: #666 !important;
+  color: #fff !important;
+  border-radius: 4px !important;
+  padding: 4px 8px !important;
+  font-size: 12px !important;
+} */
+/* .selected-team-container {
+  border-bottom: 1px solid #f0f0f0;
+} */

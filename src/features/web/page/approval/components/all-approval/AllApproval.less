@@ -1,0 +1,103 @@
+.drawer-approval {
+  border-radius: 12px 0 0 12px;
+  .ant-drawer-header {
+    padding: 12px 24px;
+    background-color: #ececfe;
+    .drawer-approval-header {
+      .approval-title {
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+        font-size: 18px;
+        .ant-tag {
+          margin-left: 10px;
+        }
+      }
+      .approval-title-des {
+        margin-top: 5px;
+        font-weight: normal;
+        font-size: 12px;
+        color: #727272;
+      }
+    }
+  }
+  .drawer-approval-content {
+    .approval-content-box {
+      .box-title {
+        font-weight: 500;
+        font-size: 16px;
+        padding-left: 10px;
+        border-left: 4px solid #4247f6;
+      }
+      .box-content {
+        padding: 12px 0;
+        // display: flex;
+        .box-content-item {
+          display: inline-block;
+          width: 30%;
+          margin-right: 10px;
+          .item-title {
+            font-weight: 500;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            .anticon {
+              color: #bbbbbb;
+              margin-left: 4px;
+            }
+          }
+          .item-content {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            .item-content-avatar {
+              margin-right: 4px;
+              width: 24px !important;
+            }
+            .item-content-txt {
+              width: 100%;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              word-break: break-all;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.approval-content-table {
+  .ant-table-expanded-row {
+    .ant-table-wrapper {
+      .ant-table {
+        margin-inline: 0 !important;
+      }
+    }
+  }
+}
+.red-row {
+  background-color: #FDEAEE !important; /* 浅红色背景 */
+}
+.red-row:hover td {
+  background-color: #FDEAEE !important; /* 浅红色背景 */
+}
+/* 确保整个行都应用样式 */
+.ant-table-tbody > tr.red-row:hover > td {
+  background-color: #FDEAEE !important;
+}
+.ant-table-wrapper .ant-table-tbody .ant-table-row.red-row >.ant-table-cell {
+    background-color: #FDEAEE !important;
+}
+.wait-approval-count {
+    margin-left: 4px;
+    cursor: pointer;
+    background-color: #F4F4F4;
+    color: #646A73;
+    padding: 0 3px;
+    border-radius: 4px;
+}
+.custom-tooltip .ant-tooltip-arrow-content {
+  background-color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}

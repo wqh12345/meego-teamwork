@@ -1,0 +1,262 @@
+.gantt-warp {
+  // 甘特图 图表区-行头
+  .gantt_task_scale {
+    .gantt_scale_cell {
+      .scale-formate-date {
+        display: flex;
+        flex-direction: column;
+        line-height: 18px;
+      }
+    }
+  }
+  .gantt_tree_content {
+    width: inherit;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+  }
+  .gantt_task_line {
+    background-color: #4247f6 !important;
+    border-radius: 8px !important;
+    border: none !important;
+  }
+  .gantt_task_progress {
+    background-color: #3ca279 !important; /* 修改进度条颜色 */
+    height: 20px; /* 修改进度条高度 */
+    border-radius: 4px; /* 修改进度条圆角 */
+  }
+  .gantt_task_content {
+    padding: 0 5px !important;
+    font-size: 12px !important;
+    line-height: 20px !important;
+    text-align: center !important;
+  }
+  .gantt-footer {
+    display: flex;
+    border: 1px solid #d7d7d7;
+    height: 48px;
+    align-items: center;
+    .footer-left {
+      display: flex;
+      border-right: 1px solid #F0F0F0;
+      height: 100%;
+      align-items: center;
+      .left-item {
+        box-sizing: border-box;
+        padding: 0 6px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-all;
+      }
+      .foot-tj-num{
+        color: #1C1C24;
+        font-weight: 500;
+        font-size: 16px;
+      }
+    }
+    .footer-right {
+      padding: 0 6px;
+      color: #1C1C24;
+      font-size: 14px;
+    }
+  }
+  .gantt_task_line{
+    display: none !important;
+  }
+  .saturation-tootip {
+    color: #bbbbbb;
+    margin-left: 4px;
+  }
+}
+.select-item-txt {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+// 「登记工时」列头：文字 + 升降序切换图标
+.register-hours-sort-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  max-width: 100%;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+}
+.register-hours-sort-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  .register-hours-sort-svg {
+    pointer-events: none;
+  }
+  // 上下两条箭头常驻显示，靠 fill 区分状态：
+  // 灰色 = 默认 / 非激活方向；蓝色 = 激活方向
+  .register-hours-sort-arrow {
+    fill: #bbb;
+    transition: fill 0.2s;
+    &.is-active {
+      fill: #4247f6;
+    }
+  }
+  &:hover .register-hours-sort-arrow {
+    fill: #4247f6;
+  }
+}
+.gantt_task_row .gantt_cell:nth-child(7),
+.gantt_task_row .gantt_cell:nth-child(8) {
+  background-color: #f0f0f0; /* 浅灰色背景 */
+}
+.ant-form-item {
+  margin-bottom: 10px;
+}
+
+.form-item-label {
+  .label-icon {
+    color: #bbbbbb;
+    margin: 0 4px;
+  }
+}
+.operate-icon{
+  width:16px;height:16px;margin-right: 1px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.user-head{
+  width:20px;height:20px;border-radius: 50%;margin-right: 5px;
+}
+.user-tag-placeholder{
+  display: inline-block;
+  margin-right: 5px;
+}
+.jd-list-icon{
+  width:16px;height:16px;margin-right: 1px;
+  cursor: pointer;
+  margin-right:4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.jd-task-icon{
+  width:16px;height:16px;margin-right: 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.itme-flex-center{
+  display:flex;align-items: center;
+}
+.jd-workItem{
+  width:100%;display:flex;justify-content: space-between;align-items: center;
+}
+.jd-ml18{
+  margin-left: 18px;
+}
+.gantt_tree_icon {
+  display: none !important;
+}
+.gantt_task_pr{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.top-left {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  .top-left-item {
+    margin-right: 8px;
+    color: #1C1C24;
+    font-size: 14px;
+    .color-icon {
+      display: inline-block;
+      // width: 12px;
+      // height: 12px;
+      // border-radius: 50%;
+      width: 32px;
+      height: 16px;
+      background: #FFFFFF;
+      border-radius: 4px 4px 4px 4px;
+      border: 1px solid #E8E8E8;
+      vertical-align: top;
+      margin-top: 2px;
+      margin-left: 5px;
+    }
+    .ml-fu-3{
+      margin-left: -3px;
+    }
+  }
+}
+.gantt-chat-cell-date{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 18px;
+}
+.gantt-day-off {
+  background: #eee;
+}
+.gantt-cell-work-hours {
+  min-height: 18px;
+}
+.gantt-cell-leave-flag {
+  color: #646a73;
+  font-size: 12px;
+  line-height: 16px;
+}
+.work-supersaturation .gantt-cell-leave-flag {
+  color: #ffffff;
+}
+.work-item-saturation{
+  width: 8px;
+  height: 8px;
+  border-radius:50%;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  color: #353535;
+}
+.work-feel-status{
+  background-color: #ffffff;
+}
+.work-low-saturation{
+  background-color: #FFD2DC;
+}
+.work-saturation{
+  background-color: #FF83A2;
+}
+.work-supersaturation{
+  background-color: #F0144A;
+  color: #ffffff;
+}
+.user-total-workItem{
+  display: inline-block;
+  width:250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space:nowrap;
+}
+.user-total-custom-field-title,
+.user-total-custom-field-value {
+  display: block;
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nowrap-cell {
+  white-space: nowrap;
+}

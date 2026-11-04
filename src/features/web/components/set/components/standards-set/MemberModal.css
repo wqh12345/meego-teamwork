@@ -1,0 +1,75 @@
+/* 弹窗整体样式 */
+.member-modal .ant-modal-body {
+  padding: 0;
+}
+
+/* 提示文案 */
+.member-tip {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* 表格容器 */
+.member-table-container {
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* 表头样式 */
+.member-header {
+  display: flex;
+  background: #F8F9FA;
+  font-weight: 600;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+/* 表格行样式 */
+.member-row {
+  display: flex;
+  border-bottom: 1px solid #e8e8e8;
+  align-items: center;
+  height: 100%;
+}
+
+/* 单元格通用样式 */
+.member-cell {
+  padding: 0 16px;
+  height: 40px;
+  /* line-height: 40px; */
+  display: flex;
+  align-items: center;
+}
+
+/* 成员名称列（固定宽度） */
+.member-name {
+  width: 140px;
+  flex-shrink: 0;
+}
+
+/* 所属团队列（自适应剩余宽度） */
+.member-team {
+  flex: 1;
+}
+
+/* 团队名称文本（溢出省略） */
+.team-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
+  display: block;
+}
+
+/* 虚拟滚动列表容器 */
+.member-list-container {
+  height: 400px; /* 与List组件的height保持一致 */
+}
+
+/* 无数据提示 */
+.no-data {
+  text-align: center;
+  line-height: 300px;
+  color: #999;
+}

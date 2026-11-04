@@ -1,0 +1,54 @@
+@keyframes scrollText {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+.top-alert-warp {
+  margin-bottom: 10px;
+  .top-alert-content-wrapper {
+    overflow: hidden;
+    .top-alert-content {
+      white-space: nowrap; /* 防止文本换行 */
+      display: inline-block;
+      position: relative; /* 定位元素，以便于绝对定位 */
+      width: 100%; /* 容器宽度 */
+      animation: scrollText 60s linear infinite; /* 应用动画 */
+    }
+  }
+}
+
+// ISV安装黄条样式
+.isv-install-banner {
+  margin-bottom: 10px;
+  .ant-alert-message {
+    width: 100%;
+  }
+  .isv-banner-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    .isv-banner-text {
+      color: #fa8c16;
+      font-weight: 500;
+    }
+    .isv-banner-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      a {
+        color: #4247f6;
+        cursor: pointer;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+      .isv-banner-divider {
+        color: #d9d9d9;
+      }
+    }
+  }
+}

@@ -1,0 +1,239 @@
+.pay-warp {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 70px);
+  background-image: url("../../../../image/pay-bg.png");
+  .act-plan-seat {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 5px;
+    align-items: center;
+  }
+  .seat-btn {
+    font-size: 12px;
+    color: #6C60EB;
+    border-radius: 20px 20px 20px 20px;
+    border: 1px solid #6C60EB;
+    padding: 3px 8px;
+    cursor: pointer;
+  }
+  .pay-contact {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 116px;
+    height: 46px;
+    background: #6c60eb;
+    box-shadow: 4px 4px 20px 0px rgba(108, 96, 235, 0.2);
+    border-radius: 24px 24px 24px 24px;
+    border: 1px solid #6c60eb;
+    cursor: pointer;
+    span {
+      padding-left: 28px;
+      text-align: center;
+      background-image: url("../../../../image/contact-icon.png");
+      background-repeat: no-repeat;
+      background-size: 24px 24px;
+      background-position: 0;
+      font-weight: 500;
+      font-size: 16px;
+      color: #ffffff;
+    }
+    text-align: center;
+    line-height: 46px;
+  }
+  .pay-warp-header {
+    text-align: center;
+    padding: 32px 0;
+    .header-title {
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: 600;
+      color: #222222;
+      margin-bottom: 12px;
+    }
+    .header-desc {
+      font-size: 14px;
+      line-height: 20px;
+      color: #797b7e;
+    }
+  }
+  .pay-warp-content {
+    height: calc(100vh - 198px);
+    display: flex;
+    flex-direction: column;
+    width: 840px;
+    margin: 0 auto;
+    .content-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .top-left {
+        padding: 0;
+        .left-title {
+          font-weight: 500;
+          font-size: 16px;
+          color: #222222;
+          line-height: 24px;
+          margin-right: 24px;
+        }
+        .left-desc {
+          width: 88px;
+          height: 34px;
+          background: #ffffff;
+          border-radius: 18px 18px 18px 18px;
+          border: 1px solid #6c60eb;
+          font-size: 16px;
+          color: #6c60eb;
+          line-height: 34px;
+          text-align: center;
+        }
+      }
+      .top-right {
+        width: 144px;
+        height: 36px;
+        line-height: 36px;
+        text-align: center;
+        background: linear-gradient(
+          270deg,
+          #02bffc 0%,
+          #6c60eb 56%,
+          #9b44fe 100%
+        );
+        box-shadow: 0px 6px 20px 0px rgba(108, 96, 235, 0.2);
+        border-radius: 24px 24px 24px 24px;
+        color: #fff;
+        cursor: pointer;
+        &:hover {
+          background: linear-gradient(
+            270deg,
+            #9b44fe 0%,
+            #6c60eb 56%,
+            #02bffc 100%
+          );
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1),
+            0 3px 6px rgba(0, 0, 0, 0.15);
+        }
+      }
+    }
+    .content-middle {
+      flex: 1;
+      padding: 32px 0;
+      display: flex;
+      flex-wrap: wrap;
+      .middle-box {
+        width: 270px;
+        margin: auto;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        background: #ffffff;
+        border-radius: 12px 12px 12px 12px;
+        border: 1px solid #f0f0f0;
+        padding: 24px;
+        box-sizing: border-box;
+        cursor: default;
+        &:hover {
+          transform: translateY(-5px) scale(1.02);
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12),
+            0 4px 8px rgba(0, 0, 0, 0.06);
+        }
+        .box-tag {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 72px;
+          height: 28px;
+          background: #e7e5fc;
+          border-radius: 0px 12px 0px 16px;
+          font-weight: 500;
+          font-size: 12px;
+          color: #6c60eb;
+          line-height: 28px;
+          text-align: center;
+        }
+        .box-title {
+          padding-left: 40px;
+          font-weight: 500;
+          font-size: 18px;
+          color: #222222;
+          line-height: 24px;
+          background-repeat: no-repeat;
+          background-size: 32px 32px;
+          background-position: 0;
+        }
+        .box-price {
+          margin-top: 24px;
+          font-weight: 700;
+          font-size: 14px;
+          color: #222222;
+          line-height: 32px;
+        }
+        .box-desc {
+          flex: 1;
+          margin-top: 24px;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          .desc-item {
+            font-weight: 400;
+            font-size: 14px;
+            color: #222222;
+            line-height: 20px;
+            margin-bottom: 16px;
+            &::before {
+              content: "●";
+              margin-right: 8px;
+              font-size: 10px;
+              vertical-align: bottom;
+            }
+            &:last-child {
+              font-weight: 500;
+              margin-bottom: 0;
+              color: #6c60eb;
+            }
+          }
+        }
+        .box-btn {
+          margin-top: 16px;
+          width: 100%;
+          height: 48px;
+          background: #e7e5fc;
+          border-radius: 8px 8px 8px 8px;
+          font-weight: 500;
+          font-size: 16px;
+          color: #6c60eb;
+          line-height: 48px;
+          text-align: center;
+          cursor: pointer;
+          &:hover {
+            background: #6c60eb;
+            color: #fff;
+          }
+        }
+      }
+    }
+    .content-bottom {
+      .bottom-title {
+        font-weight: 500;
+        font-size: 16px;
+        color: #222222;
+        line-height: 24px;
+      }
+      .bottom-desc {
+        padding-left: 28px;
+        background-image: url("../../../../image/pay-arrow-icon.png");
+        background-repeat: no-repeat;
+        background-size: 24px 24px;
+        background-position: 0;
+        font-size: 16px;
+        color: #6c60eb;
+        line-height: 24px;
+        margin-left: 24px;
+        margin-right: 16px;
+      }
+    }
+  }
+}

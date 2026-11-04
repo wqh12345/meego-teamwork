@@ -1,0 +1,115 @@
+.management-warp {
+  .management-top {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    .top-item {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      .top-item-txt {
+        width: 60px;
+      }
+      .top-item-btn {
+        flex: 1;
+        display: inline-block;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 6px 11px 6px;
+        color: #262626;
+        font-size: 14px;
+        line-height: 1;
+        list-style: none;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        border-radius: 8px;
+        transition: border 0.2s, box-shadow 0.2s, background 0.2s;
+        background: #ffffff;
+        border-width: 1px;
+        border-style: solid;
+        border-color: #ededed;
+        padding-right: 10px;
+      }
+      .ant-btn {
+        margin-left: 10px;
+      }
+      .flex{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .top-item-txt {
+          display: inline-block;
+          width: 60px;
+        }
+      }
+    }
+    .flex{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  .management-content {
+    margin-top: -10px;
+    height: calc(100vh - 184px);
+    overflow: hidden;
+    overflow-y: auto;
+    .content-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+      .content-top-box {
+        // min-width: 170px;
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid #ededed;
+        border-radius: 6px;
+        padding: 12px 12px;
+        .box-left {
+          min-width: 125px;
+          .icon {
+            margin-right: 5px;
+            color: #4247f6;
+          }
+        }
+        .box-right {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          word-break: break-all;
+        }
+      }
+      .flex-box {
+        width: 20px;
+        height: 20px;
+      }
+    }
+    .content-body {
+      height: calc(100vh - 210px);
+      .content-table {
+        margin-top: 24px;
+        .content-table-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          .header-title {
+            font-weight: 500;
+          }
+        }
+        .content-table-body {
+          margin-top: 16px;
+        }
+      }
+    }
+  }
+}

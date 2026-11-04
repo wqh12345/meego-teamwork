@@ -1,0 +1,331 @@
+// 移动端管理页面样式
+
+.management-warp {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f5f6f7;
+  overflow: hidden;
+  position: relative;
+  
+  .management-top {
+    padding: 16px;
+    background: #ffffff;
+    border-radius: 0px 0px 12px 12px;
+    flex-shrink: 0;
+    z-index: 10;
+    position: sticky;
+    top: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    
+    .top-item {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      
+      .top-item-txt {
+        width: 80px;
+        font-size: 14px;
+        color: #666666;
+        margin-right: 5px;
+        flex-shrink: 0;
+      }
+      
+      .top-item-btn {
+        flex: 1;
+        display: inline-block;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 10px 12px;
+        color: #262626;
+        font-size: 14px;
+        line-height: 1;
+        list-style: none;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        border-radius: 8px;
+        transition: border 0.2s, box-shadow 0.2s, background 0.2s;
+        background: #f8f9fa;
+        border: none;
+        padding-right: 35px;
+        
+        .anticon {
+          position: absolute;
+          right: 11px;
+          color: #BBBBBB;
+        }
+      }
+      
+      .ant-btn {
+        margin-left: 10px;
+      }
+      
+      .flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        .top-item-txt {
+          display: inline-block;
+          width: 80px;
+          font-size: 14px;
+          color: #666666;
+          margin-right: 5px;
+          flex-shrink: 0;
+        }
+      }
+    }
+    
+    .flex {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  
+  .management-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #f5f6f7;
+    overflow: hidden;
+    min-height: 0;
+    position: relative;
+    margin-top: 0;
+    
+    .content-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 12px;
+      padding: 0 16px;
+      
+      .content-top-box {
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 12px 16px;
+        min-width: 0;
+        
+        .box-left {
+          min-width: 0;
+          flex: 1;
+          display: flex;
+          align-items: center;
+          
+          .anticon {
+            margin-right: 8px;
+            color: #4247f6;
+            font-size: 16px;
+          }
+          
+          span {
+            font-size: 14px;
+            color: #262626;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+        
+        .box-right {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          word-break: break-all;
+          font-size: 16px;
+          font-weight: 500;
+          color: #262626;
+          flex-shrink: 0;
+          text-align: right;
+          min-width: 40px;
+        }
+      }
+      
+      .flex-box {
+        width: 12px;
+        height: 12px;
+      }
+    }
+    
+    .content-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 0 16px 16px;
+      margin-top: 12px;
+      
+      .content-table {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 16px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 12px;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+        
+        .content-table-body {
+          flex: 1;
+          overflow: auto;
+          -webkit-overflow-scrolling: touch;
+          
+          .ant-table-wrapper {
+            height: 100%;
+            
+            .ant-table-container {
+              height: 100%;
+              display: flex;
+              flex-direction: column;
+              
+              .ant-table {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                
+                .ant-table-container {
+                  flex: 1;
+                  
+                  .ant-table-body {
+                    flex: 1;
+                    overflow-y: auto;
+                    max-height: calc(100vh - 300px);
+                  }
+                }
+              }
+            }
+          }
+        }
+        
+        // 表格行样式
+        .table-row-even {
+          background-color: #fafafa;
+        }
+        
+        .table-row-odd {
+          background-color: #ffffff;
+        }
+        
+        .ant-table-wrapper {
+          .ant-table {
+            .ant-table-container {
+              .ant-table-tbody {
+                > tr {
+                  > td {
+                    padding: 12px 8px;
+                    border-bottom: 1px solid #f0f0f0;
+                    
+                    &:first-child {
+                      padding-left: 12px;
+                    }
+                    
+                    &:last-child {
+                      padding-right: 12px;
+                    }
+                  }
+                  
+                  &:hover {
+                    background-color: #f5f5f5 !important;
+                  }
+                }
+              }
+              
+              .ant-table-thead {
+                > tr {
+                  > th {
+                    background-color: #f8f9fa;
+                    font-weight: 600;
+                    color: #262626;
+                    padding: 14px 8px;
+                    border-bottom: 1px solid #e8e8e8;
+                    
+                    &:first-child {
+                      padding-left: 12px;
+                    }
+                    
+                    &:last-child {
+                      padding-right: 12px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// 弹窗样式
+.popup-header {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #ededed;
+}
+
+.popup-content {
+  padding-top: 16px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.popup-footer {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #ededed;
+  
+  .cancel-btn {
+    flex: 1;
+    height: 44px;
+    border-radius: 8px;
+    font-size: 16px;
+    border: none;
+    background: #f8f9fa;
+    color: #262626;
+    cursor: pointer;
+    min-width: 0;
+    transition: all 0.2s ease;
+    
+    &:active {
+      background: #e8e8e8;
+    }
+  }
+  
+  .confirm-btn {
+    flex: 1;
+    height: 44px;
+    border-radius: 8px;
+    font-size: 16px;
+    border: none;
+    background: #4247f6;
+    color: #ffffff;
+    cursor: pointer;
+    min-width: 0;
+    transition: all 0.2s ease;
+    
+    &:active {
+      background: #3539d4;
+    }
+  }
+}

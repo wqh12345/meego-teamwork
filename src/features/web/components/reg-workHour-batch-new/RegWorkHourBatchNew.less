@@ -1,0 +1,353 @@
+.regWorkHourBatchNew-warp {
+  /* 当 prop.type="tab" 时的特殊样式 */
+  &.regWorkHourBatchNew-warp-no-tab {
+    height: calc(100vh - 98px);
+    overflow-y: auto;
+  }
+  .custom-levelIcon {
+    width:15px;
+    height:15px;
+    vertical-align: top;
+    display: inline-block;
+    margin-top: 3px;
+    margin-right: 1px;
+  }
+  .registration-alert {
+    margin-bottom: 6px;
+    margin-top: 6px;
+    padding: 4px 12px;
+    .num {
+      color: #4247f6;
+      margin: 0 4px;
+    }
+    .icon {
+      color: #bbbbbb;
+      margin: 0 4px;
+    }
+  }
+  .regWorkHourBatchNew-header {
+    // margin-top: 12px;
+    margin-bottom: 0;
+    .header-box {
+      //margin-bottom: 10px;
+      margin-bottom: 8px;
+      .des-icon {
+        color: #bbbbbb;
+      }
+      .title {
+        &::before {
+          display: inline-block;
+          margin-inline-end: 4px;
+          color: #df000e;
+          font-size: 14px;
+          font-family: SimSun, sans-serif;
+          line-height: 1;
+          content: "*";
+        }
+      }
+    }
+    .save-btn {
+      position: absolute;
+      right: 0;
+      top: 0;
+      cursor: pointer;
+    }
+
+    .batch-filter-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      column-gap: 24px;
+      row-gap: 12px;
+
+      > br {
+        display: none;
+      }
+
+      .batch-filter-item {
+        display: grid;
+        grid-template-columns: 140px minmax(0, 1fr);
+        column-gap: 8px;
+        width: 100%;
+        min-width: 0;
+        margin-bottom: 0;
+        align-items: center;
+      }
+
+      .batch-filter-item > .ant-space-item {
+        min-width: 0;
+      }
+
+      .batch-filter-title,
+      .batch-filter-label {
+        flex: 0 0 140px;
+        white-space: nowrap;
+      }
+
+      .batch-filter-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+      }
+
+      .batch-filter-label .des-icon {
+        margin: 0;
+      }
+
+      .batch-filter-member .ant-select,
+      .batch-filter-work-type .ant-select,
+      .batch-filter-instance .workItemEntity-select,
+      .batch-filter-responsible .ant-radio-group {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .batch-filter-work-type .ant-select,
+      .batch-filter-instance .workItemEntity-select {
+        width: 100% !important;
+      }
+
+      .batch-date-filter-controls {
+        display: flex;
+        flex: 1;
+        min-width: 0;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .batch-date-picker {
+        width: 210px;
+      }
+
+      .batch-filter-schedule .ant-picker {
+        width: 210px;
+      }
+
+      .batch-filter-member { order: 1; }
+      .batch-filter-work-date { order: 2; }
+      .batch-filter-work-type { order: 3; }
+      .batch-filter-schedule { order: 4; }
+      .batch-filter-instance { order: 5; }
+      .batch-filter-responsible { order: 6; }
+
+      &.is-tab {
+        display: block;
+
+        > br {
+          display: block;
+        }
+
+        .batch-filter-item {
+          display: inline-flex;
+          margin-bottom: 8px;
+          width: auto;
+        }
+
+        .batch-filter-title,
+        .batch-filter-label {
+          flex: 0 0 auto;
+        }
+
+        .batch-filter-member .ant-select {
+          width: 200px;
+        }
+
+        .batch-filter-responsible .ant-radio-group {
+          width: auto;
+        }
+
+        .batch-date-filter-controls {
+          flex: none;
+        }
+      }
+
+      @media (max-width: 900px) {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      @media (max-width: 600px) {
+        .batch-filter-item {
+          grid-template-columns: minmax(0, 1fr);
+          row-gap: 6px;
+        }
+
+        .batch-filter-member .ant-select {
+          min-width: 0 !important;
+        }
+      }
+    }
+  }
+  .regWorkHourBatchNew-body {
+    position: relative;
+    margin-top: 4px;
+    .level-list{
+      position: absolute;
+      z-index: 999;
+      top: 22px;
+      left: 110px;
+      .zhankai-icon{
+        margin-left: 0;
+        margin-right: 5px;
+        color: rgba(0,0,0,.54);
+        cursor: pointer;
+        display:flex;
+        align-items:center
+      }
+    }
+    .body-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+  }
+  .regWorkHourBatchNew-footer {
+    margin-top: 12px;
+    text-align: right;
+  }
+
+  .ant-tooltip{
+    max-width: 500px;
+  }
+  .table-warp {
+    position: relative;
+    // 日期切换时的优化样式，消除抖动效果
+    &.date-changing {
+      // 禁用过渡动画，减少视觉闪烁
+      * {
+        transition: none !important;
+        animation: none !important;
+      }
+      // 保持布局稳定，避免重排
+      .ant-table {
+        min-height: 210px;
+      }
+    }
+    .ant-table-row-expand-icon-cell {
+      text-align-last: left;
+      .ant-table-row-expand-icon {
+        margin-left: 8px;
+      }
+    }
+    .table-columns-item-title {
+      display: flex;
+      align-items: center;
+      .anticon {
+        color: #bbbbbb;
+        margin-left: 4px;
+      }
+    }
+    .custom-field-column-value {
+      display: block;
+      width: 100%;
+      max-width: 100px;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .ant-table-footer{
+      padding: 0 !important;
+    }
+    .ant-table-wrapper
+      .ant-table.ant-table-small
+      .ant-table-tbody
+      .ant-table-wrapper:only-child
+      .ant-table {
+      margin-block: -8px;
+      margin-inline: 40px -8px;
+    }
+    .ant-table-expanded-row {
+      .ant-table {
+        margin-inline: 12px -8px !important;
+        .ant-table-thead {
+          display: none;
+        }
+        .ant-table-row-level-0 {
+          .ant-table-cell {
+            // padding-left: 14px;
+          }
+          .ant-table-cell:first-child {
+            // padding-left: 20px;
+          }
+        }
+      }
+    }
+    .ant-table-row-level-1 {
+      .ant-table-row-expand-icon-cell {
+        // padding-left: 20px !important;
+        text-align: right;
+      }
+    }
+    .ant-empty {
+      max-width: 900px;
+      height: 218px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      .ant-empty-image {
+        margin: 0 !important;
+      }
+    }
+  }
+  .set-icon {
+    z-index: 99;
+    position: absolute;
+    left: 0;
+    cursor: pointer;
+    height: 60px;
+  }
+}
+.ant-input-textarea-affix-wrapper {
+  textarea {
+    padding-bottom: 20px;
+  }
+}
+.regBatchNew-form {
+  margin-top: -10px;
+  .ant-form-item {
+    margin-bottom: 0;
+  }
+}
+.regBatchNew-modal {
+  .ant-modal-content {
+    padding: 16px 12px;
+  }
+}
+.workItemEntity-select {
+  .ant-select-selection-overflow {
+    .ant-select-selection-item {
+      max-width: 125px !important;
+    }
+  }
+}
+.batch-work-item-entity-dropdown {
+  .ant-select-item-option-content,
+  .batch-work-item-entity-option {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .batch-work-item-entity-option .custom-field-cascader-option {
+    max-width: 100%;
+  }
+}
+  .custom-levelIcon {
+    width:15px;
+    height:15px;
+    vertical-align: top;
+    display: inline-block;
+    margin-top: 3px
+  }
+  .dayup-error{
+    color: #df000e;
+    margin-left: 77px;
+  }
+  .attattendance-sync-btn{
+    color: #4247f6;
+    margin-left: 8px;
+    cursor: pointer;
+  }
+
+  
+

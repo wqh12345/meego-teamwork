@@ -1,0 +1,89 @@
+.approval-warp {
+  width: inherit;
+  display: flex;
+  /* 工时审批列表主表（汇总表/单条表）td 默认高 53px，四个 tab 一致；
+     height 对单元格是最小高度语义，内容换行超高时行自然撑开；
+     排除：展开子表（明细表维持现状）、暂无数据占位行；
+     抽屉内审批记录表由 Portal 挂在 body，不在此作用域内，天然不受影响 */
+  .ant-table-tbody
+    > tr:not(.ant-table-expanded-row):not(.ant-table-placeholder)
+    > .ant-table-cell {
+    height: 53px;
+  }
+  /* 展开子表（明细表）的单元格会被上面的选择器命中，这里按原样重置；
+     tr.ant-table-row 使权重与上方规则持平，靠声明顺序覆盖 */
+  .ant-table-expanded-row .ant-table-tbody > tr.ant-table-row > .ant-table-cell {
+    height: auto;
+  }
+  .approval-sider {
+    width: 170px;
+    .sider-menu {
+      height: 100%;
+      .ant-menu-item {
+        margin-inline: 4px;
+        width: calc(100% - 8px);
+        padding-inline: 10px;
+        padding-left: 14px !important;
+        .menu-item {
+          max-width: 100px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+  .approval-content {
+    width: calc(100% - 200px);
+    margin-left: 8px;
+    height: calc(100vh - 100px);
+    .content-top {
+      margin-bottom: 15px;
+    }
+    .content-bottom {
+      .approval-content-menu {
+        margin-bottom: 5px;
+      }
+      .ant-menu-horizontal {
+        line-height: 1;
+        padding-bottom: 10px;
+        .ant-menu-item {
+          &::after {
+            bottom: -9px;
+          }
+        }
+      }
+      .approval-content-btns {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-bottom: 10px;
+      }
+    }
+    .table-columns-item-title {
+      display: flex;
+      align-items: center;
+      .anticon {
+        color: #bbbbbb;
+        margin-left: 4px;
+      }
+    }
+  }
+}
+.table-columns-item {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  .table-columns-item-right {
+    margin-left: 4px;
+    .right-name {
+      word-break: break-all;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-all;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+  }
+}
