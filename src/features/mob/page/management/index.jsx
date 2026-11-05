@@ -515,7 +515,7 @@ class MbManagement extends Component {
                   type="link"
                   onClick={this.onSelectedUserOpen}
                 >
-                  团队设置
+                  团队设置弹窗
                 </Button>
               ) : null}
             </div>

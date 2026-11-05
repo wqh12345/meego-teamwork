@@ -1037,7 +1037,7 @@ const Log = (props) => {
               type="link"
               onClick={onSelectedUserOpen}
             >
-              团队设置
+              团队设置弹窗
             </Button>
           ) : null}
           {showTeamConfig ? (
