@@ -1,12 +1,12 @@
 {
   "siteDomain": "https://project.feishu.cn",
-  "pluginId": "MII_6695DDDC36A18001",
-  "pluginSecret": "d737304d76d988ec34ff9968318a8012a37d76f8d6e356c03b454840d7f0a67033937454bc034f93852a2a63ea6861ab",
-  "baseUrl": "https://timeplugintest.lundong.com.cn",
-  "boardKey": "board_2_bh9a",
-  "timeisvAppId": "cli_aac4a3dcbab85bd7",
-  "timeisvServerUrl": "timeisv-web-test.lundong.com.cn",
-  "pluginVersion": "5.1.0",
+  "pluginId": "MII_664AE0D1DE040001",
+  "pluginSecret": "649afa803b369acbc2c8785037e02294a9a8e80ca0e86492c1af483d5e09e2e3133d75aa794761fa3fa0a0530ec71b26",
+  "baseUrl": "https://workhour.lundong.com.cn",
+  "boardKey": "board_0xhr28",
+  "timeisvAppId": "cli_a9572ba449785cc5",
+  "timeisvServerUrl": "timeisv-web-dev.lundong.com.cn",
+  "pluginVersion": "5.5.0",
   "resources": [
     {
       "id": "page-web",
